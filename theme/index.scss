@@ -2,22 +2,56 @@
 
 }
 
-body, html {
-    background-color: #FFFFFF !important;
+@font-face {
+    font-family: 'Myriad Pro';
+    src: url('/fonts/MyriadPro-Cond.eot');
+    src: local('Myriad Pro Condensed'), local('MyriadPro-Cond'),
+    url('/fonts/MyriadPro-Cond.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/MyriadPro-Cond.eot.woff') format('woff'),
+    url('/fonts/MyriadPro-Cond.eot.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
 }
 
+body, html {
+    background-color: #FFFFFF !important;
+    height: 100%;
+    width: 100%;
+}
+.v-application {
+    max-height: 100vh;
+    overflow: hidden;
+}
 .theme--light.v-application {
-    background-color: #EDEEF0 !important;
+    background-color: #eeeeee !important;
 }
 
 .theme--light.v-footer {
     background-color: #FFFFFF !important;
-    height: 100px;
+    height: 10vh;
+    min-height: 60px;
+    padding: 0px;
+    width: 100%;
 }
 
 .container {
+    display: flex;
     padding: 0px !important;
     max-width: 100% !important;
+    height: 100%;
+    max-height: 100vh;
+}
+
+.v-tabs-bar{
+    height: 30px !important;
+}
+
+.v-slide-group__content{
+    height: 30px !important;
+}
+
+.v-tabs-slider-wrapper{
+    color: #8cc540 !important;
 }
 
 @media (min-width: 1200px){

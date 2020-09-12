@@ -23,8 +23,9 @@
         },
         mounted() {
             setTimeout(()=>{
-                if(this.$route.path == "/") this.$router.push("/dashboard")
-                else if ( this.$route.path == "/en") this.$router.push("/en/dashboard")
+                if(this.$route.path == "/"){
+                    this.$router.push("/dashboard");
+                }
             }, 2000)
         }
     }

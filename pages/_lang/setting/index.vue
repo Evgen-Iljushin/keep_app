@@ -1,10 +1,6 @@
 <template>
     <section class="container">
-        <div class="content_setting">
-            <div>
-                <h1>{{$t('setting.title')}}</h1>
-            </div>
-        </div>
+
     </section>
 </template>
 

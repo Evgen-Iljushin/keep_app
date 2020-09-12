@@ -58,10 +58,29 @@ export default {
     */
     modules: [
         // Doc: https://axios.nuxtjs.org/usage
+        '@nuxtjs/pwa',
         '@nuxtjs/axios',
         '@nuxt/http',
-        '@nuxtjs/pwa',
-        'nuxt-i18n'
+        'nuxt-i18n',
+        ['nuxt-twa-module', {
+            /* module options */
+            defaultUrl: 'http://35.242.225.38/',
+            hostName: '35.242.225.38',
+            applicationId: 'com.example.example',
+            launcherName: 'keep_app',
+            versionCode: 1,
+            versionName: '0.0.1',
+            statusBarColor: '#8cc540'/* color */,
+            // The sha256Fingerprints by is an array with one SHA-256 key string.
+            // But if you have multiple you can add them to the array. More information about the website asociation:
+            // https://developer.android.com/training/app-links/verify-site-associations#web-assoc
+            sha256Fingerprints: ['/* your SHA-256 keys */'],
+            /* optional */
+            /* overwrite default location for icon */
+            iconPath: '/static/icon.png',
+            /* Overwrite folder where to put .wellknown */
+            distFolder: '.nuxt/dist/client',
+        }],
     ],
     /*
     ** Axios module configuration

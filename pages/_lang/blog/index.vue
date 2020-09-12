@@ -1,10 +1,6 @@
 <template>
     <section class="container">
-        <div class="content_new">
-            <div>
-                <h1>{{$t('blog.news.title')}}</h1>
-            </div>
-        </div>
+
     </section>
 </template>
 

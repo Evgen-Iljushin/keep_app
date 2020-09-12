@@ -1,8 +1,8 @@
 <template>
     <section class="container">
-        <div class="content_new">
+        <div class="content_info">
             <div>
-                <h1>{{$t('blog.news.title')}}</h1>
+                <h1>{{$t('info.title')}}</h1>
             </div>
         </div>
     </section>
@@ -10,7 +10,7 @@
 
 <script>
     export default {
-        name: "идщп"
+        name: "Activity"
     }
 </script>
 
