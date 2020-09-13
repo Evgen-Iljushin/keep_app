@@ -16,7 +16,7 @@ module.exports = app
 
 // Start standalone server if directly running
 if (require.main === module) {
-  const port = 3030// process.env.PORT || 3001
+  const port = process.env.PORT || 3030
   app.listen(port, () => {
     console.log(`API server listening on port ${port}`)
   })
