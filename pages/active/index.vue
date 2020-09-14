@@ -38,6 +38,17 @@
                         <line-chart :chart-data="datacollection" :options="optons" style="position: relative; height:35vh; width:100vw"></line-chart>
                     </div>
                 </v-card>
+                <v-card class="tableActive">
+                    <v-data-table
+                        :headers="table.headers"
+                        :items="table.values"
+                        :items-per-page="5"
+                        class="elevation-1"
+                        :mobile-breakpoint="0"
+                        fixed-header
+                        height="30vh"
+                    ></v-data-table>
+                </v-card>
                     <!--<v-tab-item
                         v-for="i in tabs"
                         :key="i"
@@ -82,7 +93,53 @@
                 tabs: 2,
                 datacollection: null,
                 optons: null,
-                activeData: [true, false, false, false, false, false, false]
+                activeData: [true, false, false, false, false, false, false],
+                table: {
+                    headers: [
+                        {
+                            text: 'EXCH',
+                            align: 'start',
+                            value: 'exch',
+                        },
+                        { text: 'PAIR', value: 'pair' },
+                        { text: 'PRICE', value: 'price' },
+                        { text: '24H VOLUME', value: 'volume' },
+                        { text: 'TRUST', value: 'trust' }
+                    ],
+                    values: [
+                        {
+                            exch: 'Balancer',
+                            pair: '0X85... ETH',
+                            price: '$ 1.12',
+                            volume: '$597,114',
+                            trust: 'yes'
+                        }, {
+                            exch: 'Uniswap (v2)',
+                            pair: '0X85... ETH',
+                            price: '$ 1.12',
+                            volume: '$1,475,189',
+                            trust: 'yes'
+                        }, {
+                            exch: 'MXC',
+                            pair: 'KEEP USDT',
+                            price: '$ 1.20',
+                            volume: '$698,381',
+                            trust: 'yes'
+                        }, {
+                            exch: 'Horbit',
+                            pair: 'KEEP USDT',
+                            price: '$ 1.30',
+                            volume: '$16,920.00',
+                            trust: 'yes'
+                        }, {
+                            exch: 'Horbit-test',
+                            pair: 'KEEP USDT',
+                            price: '$ 1.40',
+                            volume: '$187,920',
+                            trust: 'no'
+                        },
+                    ],
+                }
 
             }
         },
@@ -250,5 +307,12 @@
     }
     .dayCheck>button.active:focus{
         border: none !important;
+    }
+    .tableActive{
+        height: 37vh;
+        width: 100vw;
+    }
+    .price>h1{
+        font-size: 35px;
     }
 </style>

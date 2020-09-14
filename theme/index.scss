@@ -64,6 +64,17 @@ body, html {
     box-shadow: none !important;
 }
 
+.theme--light.v-data-table > .v-data-table__wrapper > table > tbody > tr:not(:last-child) > td:not(.v-data-table__mobile-row), .theme--light.v-data-table > .v-data-table__wrapper > table > tbody > tr:not(:last-child) > th:not(.v-data-table__mobile-row) {
+    padding: 4px !important;
+    padding-right: 4px !important;
+    padding-left: 4px !important;
+    text-align: left !important;
+}
+
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+    padding: 0 7px !important;
+}
+
 @media (min-width: 1200px){
 
 }
