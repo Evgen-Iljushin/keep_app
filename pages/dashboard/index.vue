@@ -5,58 +5,11 @@
                 <img src="/img/banner_dashboard.png">
             </div>
             <div class="header_dashboard">
-                <div class="price">
-                    <h1>$ {{main_info.price}}</h1>
-                </div>
-                <div class="percent plus">
-                    <span>{{main_info.percent}}% <v-icon>mdi-menu-up</v-icon></span>
-                </div>
+                <h1>Coming soon...</h1>
+                <span></span>
             </div>
             <div class="body_dashboard">
-                <v-tabs
-                    v-model="tab"
-                    background-color="#eeeeee"
-                    color="black"
-                    class="elevation-2"
-                    :centered="centered"
-                    :prev-icon="prevIcon ? 'mdi-arrow-left-bold-box-outline' : undefined"
-                    :next-icon="nextIcon ? 'mdi-arrow-right-bold-box-outline' : undefined"
-                    :icons-and-text="icons"
-                >
-                    <v-tabs-slider></v-tabs-slider>
 
-                    <v-tab
-                        v-for="i in tabs"
-                        :key="i"
-                        :href="`#tab-${i}`"
-                        background-color="#eeeeee"
-                    >
-                        {{ $t('dashboard.body.tabs.tab'+ i +'_name') }}
-                        <v-icon v-if="icons">mdi-phone</v-icon>
-                    </v-tab>
-                    <v-tab-item :key="1" :value="'tab-1'">
-                        <v-card>
-                            <div class="small">
-                                <line-chart :chart-data="datacollection"></line-chart>
-                            </div>
-                        </v-card>
-                    </v-tab-item>
-                    <v-tab-item :key="2" :value="'tab-2'">
-
-                    </v-tab-item>
-                    <!--<v-tab-item
-                        v-for="i in tabs"
-                        :key="i"
-                        :value="'tab-' + i"
-                    >
-                        <v-card
-                            flat
-                            tile
-                        >
-                            <v-card-text>{{ text }}</v-card-text>
-                        </v-card>
-                    </v-tab-item>-->
-                </v-tabs>
             </div>
         </div>
     </section>
@@ -137,6 +90,17 @@
         width: 100%;
         text-align: center;
         padding: 1%;
+    }
+    .header_dashboard>h1{
+        padding: 30px;
+        font-size: 30px;
+        font-weight: 500;
+        padding-bottom: 0px;
+    }
+    .header_dashboard>span{
+        width: 50%;
+        display: inline-block;
+        border-bottom: 2px solid #99d04f;
     }
     .percent.plus span, .percent.plus span i{
         color: #8cc540 !important;

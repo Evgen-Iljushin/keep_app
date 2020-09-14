@@ -18,6 +18,12 @@ body, html {
     height: 100%;
     width: 100%;
 }
+
+.v-main{
+    height: 130vh;
+    overflow: auto !important;
+}
+
 .v-application {
     max-height: 100vh;
     overflow: hidden;
@@ -52,6 +58,10 @@ body, html {
 
 .v-tabs-slider-wrapper{
     color: #8cc540 !important;
+}
+
+.v-sheet.v-card:not(.v-sheet--outlined) {
+    box-shadow: none !important;
 }
 
 @media (min-width: 1200px){
