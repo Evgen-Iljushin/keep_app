@@ -2,6 +2,9 @@
     <section class="container">
         <div class="content_new">
             <v-card>
+                <div class="headNews">
+                    <h1>{{$t('blog.news.title')}}</h1>
+                </div>
                 <div id="newsArea">
                     <div v-for="value in news" class="newsArea" :style="`background-image: url(${value.backgroundImage});`">
                         <div class="titleNews">
@@ -128,5 +131,9 @@
     }
     .middotDivider:after {
         content: '\00B7';
+    }
+
+    .headNews{
+        text-align: center;
     }
 </style>

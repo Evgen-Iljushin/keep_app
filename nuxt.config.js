@@ -22,7 +22,7 @@ export default {
         title: process.env.npm_package_name || '',
         meta: [
             { charset: 'utf-8' },
-            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' },
             { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
         ],
         link: [
@@ -40,6 +40,7 @@ export default {
     ** https://nuxtjs.org/guide/plugins
     */
     plugins: [
+        { src: '~/plugins/i18n.js' }
     ],
     /*
     ** Auto import components
@@ -58,8 +59,8 @@ export default {
     */
     modules: [
         // Doc: https://axios.nuxtjs.org/usage
+        '@nuxtjs/onesignal',
         '@nuxtjs/pwa',
-        '@nuxtjs/axios',
         '@nuxt/http',
         'nuxt-i18n',
         ['nuxt-twa-module', {
@@ -82,6 +83,15 @@ export default {
             distFolder: '.nuxt/dist/client',
         }],
     ],
+    oneSignal: {
+        init: {
+            appId: 'e858030f-d632-4866-8c5b-62ca985be32f',
+            allowLocalhostAsSecureOrigin: true,
+            welcomeNotification: {
+                disable: true
+            }
+        }
+    },
     /*
     ** Axios module configuration
     ** See https://axios.nuxtjs.org/options
@@ -108,7 +118,6 @@ export default {
             cookieKey: 'i18n_redirected'
         }
     },
-    axios: {},
     /*
     ** vuetify module configuration
     ** https://github.com/nuxt-community/vuetify-module
@@ -160,6 +169,11 @@ export default {
         ],
         splitChunks: {
             chunks: 'all'
+        }
+    },
+    pwa: {
+        workbox: {
+            /* workbox options */
         }
     },
     build: {

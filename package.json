@@ -16,8 +16,11 @@
   "dependencies": {
     "@nuxt/http": "latest",
     "@nuxtjs/axios": "^5.12.0",
+    "@nuxtjs/onesignal": "^3.0.0-beta.16",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
+    "body-parser": "^1.19.0",
     "chart.js": "^2.9.3",
+    "chartjs-plugin-zoom": "^0.7.7",
     "env-cmd": "^10.1.0",
     "lru-cache": "^4.1.5",
     "nuxt": "^2.14.0",

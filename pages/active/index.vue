@@ -35,7 +35,7 @@
                 </v-card>
                 <v-card>
                     <div class="small" >
-                        <line-chart :chart-data="datacollection" :options="optons" style="position: relative; height:35vh; width:100vw"></line-chart>
+                        <line-chart :chart-data="datacollection" :options="optons" style="position: relative; height:35vh; width:96vw"></line-chart>
                     </div>
                 </v-card>
                 <v-card class="tableActive">
@@ -43,7 +43,7 @@
                         :headers="table.headers"
                         :items="table.values"
                         :items-per-page="5"
-                        class="elevation-1"
+                        class="elevation-1 overflow-y-auto"
                         :mobile-breakpoint="0"
                         fixed-header
                         height="30vh"
@@ -207,6 +207,62 @@
                         datalabels: {
                             display: false,
                         },
+                    },
+                    plugins: {
+                        zoom: {
+                            // Container for pan options
+                            // Container for zoom options
+                            zoom: {
+                                // Boolean to enable zooming
+                                enabled: true,
+
+                                // Enable drag-to-zoom behavior
+                                drag: true,
+
+                                // Drag-to-zoom effect can be customized
+                                // drag: {
+                                // 	 borderColor: 'rgba(225,225,225,0.3)'
+                                // 	 borderWidth: 5,
+                                // 	 backgroundColor: 'rgb(225,225,225)',
+                                // 	 animationDuration: 0
+                                // },
+
+                                // Zooming directions. Remove the appropriate direction to disable
+                                // Eg. 'y' would only allow zooming in the y direction
+                                // A function that is called as the user is zooming and returns the
+                                // available directions can also be used:
+                                //   mode: function({ chart }) {
+                                //     return 'xy';
+                                //   },
+                                mode: 'xy',
+
+                                rangeMin: {
+                                    // Format of min zoom range depends on scale type
+                                    x: 1,
+                                    y: 1
+                                },
+                                rangeMax: {
+                                    // Format of max zoom range depends on scale type
+                                    x: 2,
+                                    y: 2
+                                },
+
+                                // Speed of zoom via mouse wheel
+                                // (percentage of zoom on a wheel event)
+                                speed: 0.1,
+
+                                // Minimal zoom distance required before actually applying zoom
+                                threshold: 2,
+
+                                // On category scale, minimal zoom level before actually applying zoom
+                                sensitivity: 3,
+
+                                // Function called while the user is zooming
+                                onZoom: function({chart}) { console.log(`I'm zooming!!!`); },
+                                // Function called once zooming is completed
+                                onZoomComplete: function({chart}) { console.log(`I was zoomed!!!`); }
+                            }
+                        }
                     }
                 }
             },
@@ -228,6 +284,9 @@
         overflow: hidden;
         float: none;
         justify-content: center;
+    }
+    .body_dashboard{
+        padding: 2%;
     }
     .content_dashboard{
         display: block;

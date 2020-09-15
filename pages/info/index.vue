@@ -1,7 +1,7 @@
 <template>
     <section class="container">
         <div class="content_info">
-            <div style="padding: 3%">
+            <div style="padding: 2%">
                 <h1>Privacy Policy</h1>
                 <br>
                 <p>

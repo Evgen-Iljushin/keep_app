@@ -9,6 +9,7 @@
                     privacy.
                 </p>
             </div>
+            <p>{{test}}</p>
         </div>
     </div>
 </template>
@@ -23,8 +24,8 @@
         },
         mounted() {
             setTimeout(()=>{
-                if(this.$route.path == "/") this.$router.push("/dashboard")
-                else if ( this.$route.path == "/en") this.$router.push("/en/dashboard")
+                if(this.$route.path == "/") this.$router.push("/active")
+                else if ( this.$route.path == "/en") this.$router.push("/en/active")
             }, 2000)
         }
     }
