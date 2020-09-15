@@ -63,25 +63,25 @@ export default {
         '@nuxtjs/pwa',
         '@nuxt/http',
         'nuxt-i18n',
-        ['nuxt-twa-module', {
-            /* module options */
-            defaultUrl: 'http://34.121.103.5/',
-            hostName: '34.121.103.5',
-                applicationId: 'com.example.keep_app',
-            launcherName: 'Keep App',
-            versionCode: 1,
-            versionName: '0.0.1',
-            statusBarColor: '#8cc540'/* color */,
-            // The sha256Fingerprints by is an array with one SHA-256 key string.
-            // But if you have multiple you can add them to the array. More information about the website asociation:
-            // https://developer.android.com/training/app-links/verify-site-associations#web-assoc
-            sha256Fingerprints: ['e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'],
-            /* optional */
-            /* overwrite default location for icon */
-            iconPath: '/static/icon.png',
-            /* Overwrite folder where to put .wellknown */
-            distFolder: '.nuxt/dist/client',
-        }],
+        //['nuxt-twa-module', {
+        //    /* module options */
+        //    defaultUrl: 'http://34.121.103.5/',
+        //    hostName: '34.121.103.5',
+        //        applicationId: 'com.example.keep_app',
+        //    launcherName: 'Keep App',
+        //    versionCode: 1,
+        //    versionName: '0.0.1',
+        //    statusBarColor: '#8cc540'/* color */,
+        //    // The sha256Fingerprints by is an array with one SHA-256 key string.
+        //    // But if you have multiple you can add them to the array. More information about the website asociation:
+        //    // https://developer.android.com/training/app-links/verify-site-associations#web-assoc
+        //    sha256Fingerprints: ['e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'],
+        //    /* optional */
+        //    /* overwrite default location for icon */
+        //    iconPath: '/static/icon.png',
+        //    /* Overwrite folder where to put .wellknown */
+        //    distFolder: '.nuxt/dist/client',
+        //}],
     ],
     oneSignal: {
         init: {
@@ -98,7 +98,7 @@ export default {
     */
     i18n: {
         strategy: 'prefix_except_default',
-        defaultLocale: 'ru',
+        defaultLocale: 'en',
         locales: [
             {
                 code: 'en',

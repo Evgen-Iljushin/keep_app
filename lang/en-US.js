@@ -3,7 +3,8 @@ export default {
     setting: {
         swithLang: 'Сменить язык на ',
         another_lang: 'русский',
-        title: 'Setting'
+        title: 'Setting',
+        title2: 'Others'
     },
     menu: {
         dashboardName: 'Dashboard',

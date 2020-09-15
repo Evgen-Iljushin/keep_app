@@ -9,7 +9,6 @@
                     privacy.
                 </p>
             </div>
-            <p>{{test}}</p>
         </div>
     </div>
 </template>
@@ -48,7 +47,7 @@
         position: fixed;
         bottom: 5%;
         max-width: 50%;
-        right: 12%;
+        right: 5vw;
     }
 
     .tagline>p{

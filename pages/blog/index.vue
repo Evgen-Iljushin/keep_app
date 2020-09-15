@@ -7,27 +7,29 @@
                 </div>
                 <div id="newsArea">
                     <div v-for="value in news" class="newsArea" :style="`background-image: url(${value.backgroundImage});`">
-                        <div class="titleNews">
-                            <h1>{{value.title}}</h1>
-                        </div>
-                        <div class="descriptionNews">
-                            <div class="desription">
+                        <nuxt-link :to="value.url">
+                            <div class="titleNews">
+                                <h1>{{value.title}}</h1>
+                            </div>
+                            <div class="descriptionNews">
+                                <div class="desription">
                                 <span>
                                     {{value.description != undefined ? value.description : ''}}
                                 </span>
+                                </div>
+                                <div class="icon">
+                                    <img src="/img/keep-mini.jpeg">
+                                </div>
+                                <div class="authorNews">
+                                    <span>{{value.author}}</span>
+                                </div>
+                                <div class="timeReading">
+                                    <span>{{value.data}}</span>
+                                    <span class="middotDivider"></span>
+                                    <span>{{value.timeRead}}</span>
+                                </div>
                             </div>
-                            <div class="icon">
-                                <img src="/img/keep-mini.jpeg">
-                            </div>
-                            <div class="authorNews">
-                                <span>{{value.author}}</span>
-                            </div>
-                            <div class="timeReading">
-                                <span>{{value.data}}</span>
-                                <span class="middotDivider"></span>
-                                <span>{{value.timeRead}}</span>
-                            </div>
-                        </div>
+                        </nuxt-link>
                     </div>
                 </div>
             </v-card>
@@ -48,21 +50,24 @@
                         author: "Keep Network",
                         data: "Apr 15",
                         timeRead: "4 min read",
-                        backgroundImage: '/img/news-1.jpeg'
+                        backgroundImage: '/img/news-1.jpeg',
+                        url: '/blog/test'
                     },
                     {
                         title: "How the KEEP Token Works",
                         author: "Keep Network",
                         data: "Apr 15",
                         timeRead: "4 min read",
-                        backgroundImage: '/img/news-2.jpeg'
+                        backgroundImage: '/img/news-2.jpeg',
+                        url: '/blog/test'
                     },
                     {
                         title: "How to Play for Keeps",
                         author: "Keep Network",
                         data: "Apr 15",
                         timeRead: "4 min read",
-                        backgroundImage: '/img/news-3.jpeg'
+                        backgroundImage: '/img/news-3.jpeg',
+                        url: '/blog/test'
                     },
                 ]
             }

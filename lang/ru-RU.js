@@ -3,7 +3,8 @@ export default {
     setting: {
         swithLang: 'Change lang on ',
         another_lang: 'english',
-        title: 'Настройки'
+        title: 'Настройки',
+        title2: 'Дополнительно'
     },
     menu: {
         dashboardName: 'Инфопанель',

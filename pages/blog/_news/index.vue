@@ -33,7 +33,9 @@
     .loadHtml{
         display: block;
         width: 100vw;
-        padding: 5%;
+        padding: 3%;
+        height: 93vh;
+        overflow: scroll;
     }
     .newsDescription>p{
         font-style: italic;

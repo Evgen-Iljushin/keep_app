@@ -3,6 +3,9 @@
         <div class="content_dashboard">
             <div class="header_dashboard">
                 <div class="price">
+                    <h2>Active</h2>
+                </div>
+                <div class="price">
                     <h1>$ {{main_info.price}}</h1>
                 </div>
                 <div class="percent plus">
@@ -46,7 +49,7 @@
                         class="elevation-1 overflow-y-auto"
                         :mobile-breakpoint="0"
                         fixed-header
-                        height="30vh"
+                        height="26vh"
                     ></v-data-table>
                 </v-card>
                     <!--<v-tab-item
@@ -234,7 +237,7 @@
                                 //   mode: function({ chart }) {
                                 //     return 'xy';
                                 //   },
-                                mode: 'xy',
+                                mode: 'x',
 
                                 rangeMin: {
                                     // Format of min zoom range depends on scale type
@@ -249,13 +252,13 @@
 
                                 // Speed of zoom via mouse wheel
                                 // (percentage of zoom on a wheel event)
-                                speed: 0.1,
+                                speed: 0.01,
 
                                 // Minimal zoom distance required before actually applying zoom
-                                threshold: 2,
+                                threshold: 1,
 
                                 // On category scale, minimal zoom level before actually applying zoom
-                                sensitivity: 3,
+                                sensitivity: 1,
 
                                 // Function called while the user is zooming
                                 onZoom: function({chart}) { console.log(`I'm zooming!!!`); },
@@ -368,7 +371,7 @@
         border: none !important;
     }
     .tableActive{
-        height: 37vh;
+        height: 32vh;
         width: 100vw;
     }
     .price>h1{
