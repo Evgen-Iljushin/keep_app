@@ -1,7 +1,7 @@
 <template>
-    <v-app dark>
+    <v-app :dark="true">
         <!--<v-navigation-drawer
-            v-model="drawer"
+            v-models="drawer"
             :mini-variant="miniVariant"
             :clipped="clipped"
             fixed
@@ -63,7 +63,7 @@
             </v-container>
         </v-main>
         <!--<v-navigation-drawer
-            v-model="rightDrawer"
+            v-models="rightDrawer"
             :right="right"
             temporary
             fixed
@@ -81,27 +81,27 @@
         </v-navigation-drawer>-->
         <div class="static_footer">
             <div class="navButtons">
-                <n-link :to="localePath('dashboard')">
+                <n-link :to="localePath('dashboard')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
                     <v-btn>
                         <img :src="$route.path.indexOf('dashboard') != -1 ? '/icon/Dashbordicon2.png' : '/icon/Dashbordicon1.png'">
                     </v-btn>
                 </n-link>
-                <n-link :to="localePath('active')">
+                <n-link :to="localePath('active')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
                     <v-btn>
                         <img :src="$route.path.indexOf('active') != -1 ? '/icon/Activityicon2.png' : '/icon/Activityicon1.png'">
                     </v-btn>
                 </n-link>
-                <n-link :to="localePath('blog')">
+                <n-link :to="localePath('blog')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
                     <v-btn>
                         <img :src="$route.path.indexOf('blog') != -1 ? '/icon/News_active.png' : '/icon/News.png'">
                     </v-btn>
                 </n-link>
-                <n-link :to="localePath('info')">
+                <n-link :to="localePath('info')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
                     <v-btn>
                         <img :src="$route.path.indexOf('info') != -1 ? '/icon/Info_active.png' : '/icon/Info.png'">
                     </v-btn>
                 </n-link>
-                <n-link :to="localePath('setting')">
+                <n-link :to="localePath('setting')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
                     <v-btn>
                         <img :src="$route.path.indexOf('setting') != -1 ? '/icon/Settings_active.png' : '/icon/Settings.png'">
                     </v-btn>
@@ -168,6 +168,11 @@
             window.$OneSignal.push(['addListenerForNotificationOpened', (data) => {
                 console.log('Received NotificationOpened:', data )}
             ]);
+
+
+        },
+        beforeCreate() {
+            this.$vuetify.theme.dark = this.$store.state.localStorage.darkMode
         }
     }
 </script>
@@ -188,14 +193,21 @@
     .navButtons button:after{
         width: auto;
         height: 40px !important;
-        background-color: #FFFFFF !important;
         border: none;
+        background-color: #121212 !important;
         box-shadow: none;
         display: flex;
         align-self: center;
     }
-    .navButtons .nuxt-link-active>button{
-        //background-color: #8ACB32 !important;
+    .navButtons button.theme--light,.navButtons button.theme--light:active,.navButtons button.theme--light:focus,
+    .navButtons button.theme--light:before, .navButtons button.theme--light:after{
+        background-color: #FFFFFF !important;
+    }
+    .navButtons .link{
+        background-color: #FFFFFF !important;
+    }
+    .navButtons .link.themeDark{
+        background-color: #121212 !important;
     }
    img{
         max-height: 27px;
@@ -208,7 +220,7 @@
         display: flex;
         bottom: 0px;
         vertical-align: center;
-        background-color: white;
+
         position: fixed;
         width: 100%;
         height: 60px;

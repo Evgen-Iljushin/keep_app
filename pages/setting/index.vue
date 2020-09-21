@@ -5,23 +5,41 @@
             <div class="settingInputs">
                 <div class="settingsRow">
                     <span>Dark Mode</span>
-                    <v-switch v-model="darkMode" class="ma-2" color="green"></v-switch>
+                    <v-switch v-model="darkMode" class="ma-2" color="green" @click="switchDarkMode()" />
                 </div>
                 <div class="settingsRow">
                     <span>Notification</span>
-                    <v-switch v-model="notification" class="ma-2" color="green"></v-switch>
+                    <v-switch v-model="notification" class="ma-2" color="green" @click="switchNotifications()" />
                 </div>
                 <div class="settingsRow">
                     <span>Default Currency</span>
-                    <span class="spanValue">USD</span>
+                    <span class="spanValue">
+                        <v-select
+                            v-model="currentCurrency"
+                            :items="currency"
+                            @change="switchCurrency()"
+                        ></v-select>
+                    </span>
                 </div>
                 <div class="settingsRow">
                     <span>Language</span>
-                    <span class="spanValue">English</span>
+                    <span class="spanValue">
+                        <v-select
+                            v-model="currentLang"
+                            :items="lang"
+                            @change="switchLang()"
+                        ></v-select>
+                    </span>
                 </div>
                 <div class="settingsRow">
                     <span>Default Start Screen</span>
-                    <span class="spanValue">News</span>
+                    <span class="spanValue">
+                        <v-select
+                            v-model="currentScreen"
+                            :items="startScreen"
+                            @change="switchScreen()"
+                        ></v-select>
+                    </span>
                 </div>
             </div>
             <h1>{{$t('setting.title2')}}</h1>
@@ -50,7 +68,53 @@
             return {
                 darkMode: false,
                 notification: true,
+                lang: ['English', 'Русский', 'Deutsch', 'Greek', 'Spanish', 'French',
+                'Italian', 'Korean', 'Polish', 'Japanese', 'Chinese', 'Portuguese',
+                'Vietnamese', 'Dutch'],
+                currentLang: 'English',
+                currency: ['USD', 'EUR', 'BTC', 'ETH'],
+                currentCurrency: 'USD',
+                startScreen: ['Dashboard', 'Active', 'News'],
+                currentScreen: 'Active'
             }
+        },
+        methods:{
+            switchDarkMode(){
+                this.$store.commit('localStorage/switchDarkMode', !this.$store.state.localStorage.darkMode)
+                this.darkMode = this.$store.state.localStorage.darkMode
+                this.$vuetify.theme.dark = this.$store.state.localStorage.darkMode
+            },
+            switchNotifications(){
+                this.$store.commit('localStorage/switchNotifications', !this.$store.state.localStorage.notifications)
+                this.notification =  this.$store.state.localStorage.notification
+            },
+            switchCurrency(){
+                console.log('this.currentCurrency: ', this.currentCurrency)
+                this.$store.commit('localStorage/switchCurrency', this.currentCurrency)
+            },
+            switchScreen(){
+                this.$store.commit('localStorage/switchScreen', this.currentScreen)
+            },
+            switchLang(){
+                this.$store.commit('localStorage/switchLang', this.currentLang)
+            }
+        },
+        computed:{
+
+        },
+        watch:{
+            value(){
+                this.updateValue(this.findOptionFromReducedValue(this.value) || {})
+            }
+        },
+        mounted() {
+            this.darkMode =  this.$store.state.localStorage.darkMode
+            this.notification =  this.$store.state.localStorage.notifications
+            console.log('this.notification: ', this.notification)
+            this.currentLang =  this.$store.state.localStorage.defaultLang
+            this.currentCurrency =  this.$store.state.localStorage.defaultCurrency
+            this.currentScreen =  this.$store.state.localStorage.defaultStartScreen
+
         }
     }
 </script>
@@ -79,9 +143,17 @@
     .settingsRow>span{
         font-size: 18px;
         font-weight: 500;
+
     }
     .spanValue{
         opacity: 0.5;
         padding-right: 6px;
+        max-width: 38%;
+    }
+    .spanValue>div{
+        width: 38% !important;
+        right: 0px !important;;
+        margin: 0px !important;;
+        display: contents !important;;
     }
 </style>

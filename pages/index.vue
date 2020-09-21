@@ -23,9 +23,14 @@
         },
         mounted() {
             setTimeout(()=>{
-                if(this.$route.path == "/") this.$router.push("/active")
-                else if ( this.$route.path == "/en") this.$router.push("/en/active")
+                console.log('path: ', this.$route.path)
+                if(this.$route.path == "/" || this.$route.path == "") this.$router.push("/active")
+                else if ( this.$route.path == "/en" || this.$route.path == "/en/") this.$router.push("/en/active")
+                else if ( this.$route.path == "/ru" || this.$route.path == "/ru/") this.$router.push("/ru/active")
             }, 2000)
+        },
+        beforeCreate() {
+            this.$vuetify.theme.dark = this.$store.state.localStorage.darkMode
         }
     }
 </script>

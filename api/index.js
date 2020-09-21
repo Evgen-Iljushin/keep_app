@@ -7,11 +7,15 @@ const app = express()
 const users = require('./routes/users')
 const test = require('./routes/test')
 const news = require('./routes/news')
+const crypto = require('./routes/crypto')
 
 // Import API Routes
 app.use(users)
 app.use(test)
 app.use(news)
+app.use(crypto)
+
+require('./middleware/parseData')
 
 // Export express app
 module.exports = app

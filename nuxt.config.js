@@ -63,6 +63,7 @@ export default {
         '@nuxtjs/pwa',
         '@nuxt/http',
         'nuxt-i18n',
+        'nuxt-vuex-localstorage',
         //['nuxt-twa-module', {
         //    /* module options */
         //    defaultUrl: 'http://34.121.103.5/',
@@ -134,7 +135,7 @@ export default {
                     warning: colors.amber.base,
                     error: colors.deepOrange.accent4,
                     success: colors.green.accent3
-                },
+                        },
                 light: {
                     primary: colors.red.darken1, // #E53935
                     secondary: colors.red.lighten4, // #FFCDD2
@@ -173,7 +174,22 @@ export default {
     },
     pwa: {
         workbox: {
-            /* workbox options */
+            importScripts: [
+                '/custom-sw.js'
+            ],
+            runtimeCaching: [
+                {
+                    enabled: true,
+                    urlPattern: '/*',
+                    strategyOptions: {
+                        cacheName: 'our-cache',
+                        cacheExpiration: {
+                            maxEntries: 10,
+                            maxAgeSeconds: 24 * 3600
+                        }
+                    }
+                }
+            ]
         }
     },
     build: {

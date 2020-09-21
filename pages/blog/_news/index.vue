@@ -10,7 +10,8 @@
         name: "index",
         async asyncData ({ $http, route }) {
             let urlNews = route.path.split('/')
-            var thisNews = await $http.$post('http://34.121.103.5/api/getNews/getOneNews', { url: urlNews[urlNews.length - 1]})
+            //var thisNews = await $http.$post('http://34.121.103.5/api/getNews/getOneNews', { url: urlNews[urlNews.length - 1]})
+            var thisNews = await $http.$post('/api/getNews/getOneNews', { url: urlNews[urlNews.length - 1]})
             //const thisNews = await res.text()
             return { thisNews }
 

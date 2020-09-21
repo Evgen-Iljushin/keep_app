@@ -38,18 +38,18 @@
                 </v-card>
                 <v-card>
                     <div class="small" >
-                        <line-chart :chart-data="datacollection" :options="optons" style="position: relative; height:35vh; width:96vw"></line-chart>
+                        <line-chart :chart-data="datacollection" :options="optons" style="position: relative; height:25vh; width:96vw"></line-chart>
                     </div>
                 </v-card>
                 <v-card class="tableActive">
                     <v-data-table
                         :headers="table.headers"
                         :items="table.values"
-                        :items-per-page="5"
+                        :items-per-page="15"
                         class="elevation-1 overflow-y-auto"
                         :mobile-breakpoint="0"
                         fixed-header
-                        height="26vh"
+                        height="29vh"
                     ></v-data-table>
                 </v-card>
                     <!--<v-tab-item
@@ -78,6 +78,45 @@
         components: {
             LineChart
         },
+        async asyncData ({ $http }) {
+            const allCrypto = await $http.$post('/api/getCrypto/getAllCrypto')
+            var table = {
+                headers: [
+                    {
+                        text: 'EXCH',
+                        align: 'start',
+                        value: 'exch',
+                    },
+                    {text: 'PAIR', value: 'pair'},
+                    {text: 'PRICE', value: 'price'},
+                    {text: '24H VOLUME', value: 'volume'},
+                    {text: 'TRUST', value: 'trust'}
+                ],
+                values: []
+            }
+
+            console.log('get all crypto: ', allCrypto.data)
+            if(allCrypto.type == 'success'){
+                for(let x = 0; x < allCrypto.data.length; x++){
+                    table.values.push({
+                        exch: allCrypto.data[x].name,
+                        pair: allCrypto.data[x].pair,
+                        price: allCrypto.data[x].price,
+                        volume: allCrypto.data[x]._24hVolume,
+                        trust: allCrypto.data[x].trust,
+                    })
+                    console.log('get all crypto1: ', table.values)
+                    //this.table = table
+                }
+
+            } else {
+                console.log('err get all crypto: ', allCrypto.data)
+            }
+            return {
+                table: table
+            }
+
+        },
         data: () => {
             return {
                 main_info: {
@@ -97,52 +136,52 @@
                 datacollection: null,
                 optons: null,
                 activeData: [true, false, false, false, false, false, false],
-                table: {
-                    headers: [
-                        {
-                            text: 'EXCH',
-                            align: 'start',
-                            value: 'exch',
-                        },
-                        { text: 'PAIR', value: 'pair' },
-                        { text: 'PRICE', value: 'price' },
-                        { text: '24H VOLUME', value: 'volume' },
-                        { text: 'TRUST', value: 'trust' }
-                    ],
-                    values: [
-                        {
-                            exch: 'Balancer',
-                            pair: '0X85... ETH',
-                            price: '$ 1.12',
-                            volume: '$597,114',
-                            trust: 'yes'
-                        }, {
-                            exch: 'Uniswap (v2)',
-                            pair: '0X85... ETH',
-                            price: '$ 1.12',
-                            volume: '$1,475,189',
-                            trust: 'yes'
-                        }, {
-                            exch: 'MXC',
-                            pair: 'KEEP USDT',
-                            price: '$ 1.20',
-                            volume: '$698,381',
-                            trust: 'yes'
-                        }, {
-                            exch: 'Horbit',
-                            pair: 'KEEP USDT',
-                            price: '$ 1.30',
-                            volume: '$16,920.00',
-                            trust: 'yes'
-                        }, {
-                            exch: 'Horbit-test',
-                            pair: 'KEEP USDT',
-                            price: '$ 1.40',
-                            volume: '$187,920',
-                            trust: 'no'
-                        },
-                    ],
-                }
+                //table: {
+                //    headers: [
+                //        {
+                //            text: 'EXCH',
+                //            align: 'start',
+                //            value: 'exch',
+                //        },
+                //        { text: 'PAIR', value: 'pair' },
+                //        { text: 'PRICE', value: 'price' },
+                //        { text: '24H VOLUME', value: 'volume' },
+                //        { text: 'TRUST', value: 'trust' }
+                //    ],
+                //    values: [
+                //        {
+                //            exch: 'Balancer',
+                //            pair: '0X85... ETH',
+                //            price: '$ 1.12',
+                //            volume: '$597,114',
+                //            trust: 'yes'
+                //        }, {
+                //            exch: 'Uniswap (v2)',
+                //            pair: '0X85... ETH',
+                //            price: '$ 1.12',
+                //            volume: '$1,475,189',
+                //            trust: 'yes'
+                //        }, {
+                //            exch: 'MXC',
+                //            pair: 'KEEP USDT',
+                //            price: '$ 1.20',
+                //            volume: '$698,381',
+                //            trust: 'yes'
+                //        }, {
+                //            exch: 'Horbit',
+                //            pair: 'KEEP USDT',
+                //            price: '$ 1.30',
+                //            volume: '$16,920.00',
+                //            trust: 'yes'
+                //        }, {
+                //            exch: 'Horbit-test',
+                //            pair: 'KEEP USDT',
+                //            price: '$ 1.40',
+                //            volume: '$187,920',
+                //            trust: 'no'
+                //        },
+                //    ],
+                //}
 
             }
         },
@@ -217,7 +256,7 @@
                             // Container for zoom options
                             zoom: {
                                 // Boolean to enable zooming
-                                enabled: true,
+                                enabled: false,
 
                                 // Enable drag-to-zoom behavior
                                 drag: true,
