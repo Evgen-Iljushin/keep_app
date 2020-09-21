@@ -21,7 +21,10 @@ function parseTableCrypto() {
 
         (async () => {
             try {
-                const browser = await puppeteer.launch({args: ['--no-sandbox']});
+                const browser = await puppeteer.launch({
+                    ignoreDefaultArgs: ['--disable-extensions'],
+                    args: ['--no-sandbox', '--disable-setuid-sandbox']
+                });
                 const page = await browser.newPage();
                 await page.setViewport({ width: 1920, height: 1080});
                 await page.goto(tableUrl, {waitUntil: 'load'});
