@@ -80,33 +80,41 @@
             </v-list>
         </v-navigation-drawer>-->
         <div class="static_footer">
-            <div class="navButtons">
-                <n-link :to="localePath('dashboard')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
-                    <v-btn>
-                        <img :src="$route.path.indexOf('dashboard') != -1 ? '/icon/Dashbordicon2.png' : '/icon/Dashbordicon1.png'">
-                    </v-btn>
-                </n-link>
-                <n-link :to="localePath('active')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
-                    <v-btn>
-                        <img :src="$route.path.indexOf('active') != -1 ? '/icon/Activityicon2.png' : '/icon/Activityicon1.png'">
-                    </v-btn>
-                </n-link>
-                <n-link :to="localePath('blog')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
-                    <v-btn>
-                        <img :src="$route.path.indexOf('blog') != -1 ? '/icon/News_active.png' : '/icon/News.png'">
-                    </v-btn>
-                </n-link>
-                <n-link :to="localePath('info')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
-                    <v-btn>
-                        <img :src="$route.path.indexOf('info') != -1 ? '/icon/Info_active.png' : '/icon/Info.png'">
-                    </v-btn>
-                </n-link>
-                <n-link :to="localePath('setting')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
-                    <v-btn>
-                        <img :src="$route.path.indexOf('setting') != -1 ? '/icon/Settings_active.png' : '/icon/Settings.png'">
-                    </v-btn>
-                </n-link>
-            </div>
+            <client-only>
+                <div class="navButtons">
+                    <n-link :to="localePath('dashboard')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
+                        <v-btn>
+                            <img :src="$route.path.indexOf('dashboard') != -1 ? '/icon/Dashbordicon2.png' :
+                         (this.$vuetify.theme.dark ? '/icon/Dashbordicon1_white.png' : '/icon/Dashbordicon1.png')">
+                        </v-btn>
+                    </n-link>
+                    <n-link :to="localePath('active')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
+                        <v-btn>
+                            <img :src="$route.path.indexOf('active') != -1 ? '/icon/Activityicon2.png' :
+                        (this.$vuetify.theme.dark ? '/icon/Activityicon1_white.png' : '/icon/Activityicon1.png')">
+                        </v-btn>
+                    </n-link>
+                    <n-link :to="localePath('blog')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
+                        <v-btn>
+                            <img :src="$route.path.indexOf('blog') != -1 ? '/icon/News_active.png' :
+                        (this.$vuetify.theme.dark ? '/icon/News_white.png' : '/icon/News.png')">
+                        </v-btn>
+                    </n-link>
+                    <n-link :to="localePath('info')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
+                        <v-btn>
+                            <img :src="$route.path.indexOf('info') != -1 ? '/icon/Info_active.png' :
+                        (this.$vuetify.theme.dark ? '/icon/Info_white.png' : '/icon/Info.png')">
+                        </v-btn>
+                    </n-link>
+                    <n-link :to="localePath('setting')" :class="$store.state.localStorage.darkMode ? 'link themeDark' : 'link'">
+                        <v-btn>
+                            <img :src="$route.path.indexOf('setting') != -1 ? '/icon/Settings_active.png' :
+                        (this.$vuetify.theme.dark ? '/icon/Settings_white.png' : '/icon/Settings.png')">
+                        </v-btn>
+                    </n-link>
+                </div>
+
+            </client-only>
         </div>
         <!--<v-footer
             :absolute="fixed"
@@ -153,6 +161,9 @@
             availableLocales () {
                 return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale)
             }
+        },
+        watch:{
+
         },
         mounted(){
             this.$OneSignal.push(() => {

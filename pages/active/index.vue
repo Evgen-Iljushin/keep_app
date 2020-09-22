@@ -3,7 +3,7 @@
         <div class="content_dashboard">
             <div class="header_dashboard">
                 <div class="price">
-                    <h2>Active</h2>
+                    <h2>{{$t('info.title')}}</h2>
                 </div>
                 <div class="price">
                     <h1>$ {{main_info.price}}</h1>
@@ -79,7 +79,9 @@
             LineChart
         },
         async asyncData ({ $http }) {
-            const allCrypto = await $http.$post('http://34.121.103.5/api/getCrypto/getAllCrypto')
+            const allCrypto = await $http.$post('https://topcryptoevents.com/api/getCrypto/getAllCrypto')
+            //const allCrypto = await $http.$post('http://34.121.103.5/api/getCrypto/getAllCrypto')
+            //const allCrypto = await $http.$post('/api/getCrypto/getAllCrypto')
             var table = {
                 headers: [
                     {

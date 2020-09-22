@@ -4,15 +4,15 @@
             <h1>{{$t('setting.title')}}</h1>
             <div class="settingInputs">
                 <div class="settingsRow">
-                    <span>Dark Mode</span>
+                    <span>{{$t('setting.darkMode')}}</span>
                     <v-switch v-model="darkMode" class="ma-2" color="green" @click="switchDarkMode()" />
                 </div>
                 <div class="settingsRow">
-                    <span>Notification</span>
+                    <span>{{$t('setting.notification')}}</span>
                     <v-switch v-model="notification" class="ma-2" color="green" @click="switchNotifications()" />
                 </div>
                 <div class="settingsRow">
-                    <span>Default Currency</span>
+                    <span>{{$t('setting.defaultCurrency')}}</span>
                     <span class="spanValue">
                         <v-select
                             v-model="currentCurrency"
@@ -22,7 +22,7 @@
                     </span>
                 </div>
                 <div class="settingsRow">
-                    <span>Language</span>
+                    <span>{{$t('setting.language')}}</span>
                     <span class="spanValue">
                         <v-select
                             v-model="currentLang"
@@ -32,11 +32,11 @@
                     </span>
                 </div>
                 <div class="settingsRow">
-                    <span>Default Start Screen</span>
+                    <span>{{$t('setting.defaultStartScreen')}}</span>
                     <span class="spanValue">
                         <v-select
-                            v-model="currentScreen"
-                            :items="startScreen"
+                            v-model="currentScreen[`${$i18n.loadedLanguages[0]}`]"
+                            :items="startScreen[`${$i18n.loadedLanguages[0]}`]"
                             @change="switchScreen()"
                         ></v-select>
                     </span>
@@ -45,15 +45,15 @@
             <h1>{{$t('setting.title2')}}</h1>
             <div class="settingInputs">
                 <div class="settingsRow">
-                    <span>Chat with us on Discord</span>
+                    <span><a href="/">{{$t('setting.discordText')}}</a></span>
                     <span class="spanValue"></span>
                 </div>
                 <div class="settingsRow">
-                    <span>Follow us on Medium</span>
+                    <span><a href="/">{{$t('setting.mediumText')}}</a></span>
                     <span class="spanValue"></span>
                 </div>
                 <div class="settingsRow">
-                    <span>Contact Us</span>
+                    <span><a href="/">{{$t('setting.contactText')}}</a></span>
                     <span class="spanValue"></span>
                 </div>
             </div>
@@ -74,8 +74,14 @@
                 currentLang: 'English',
                 currency: ['USD', 'EUR', 'BTC', 'ETH'],
                 currentCurrency: 'USD',
-                startScreen: ['Dashboard', 'Active', 'News'],
-                currentScreen: 'Active'
+                startScreen: {
+                    en: ['Dashboard', 'Active', 'News'],
+                    ru: ['Панель управления', 'Активность', 'Новости']
+                } ,
+                currentScreen: {
+                    en: 'Active',
+                    ru: 'Активность'
+                }
             }
         },
         methods:{
@@ -93,10 +99,25 @@
                 this.$store.commit('localStorage/switchCurrency', this.currentCurrency)
             },
             switchScreen(){
-                this.$store.commit('localStorage/switchScreen', this.currentScreen)
+                console.log('this.currentScreen[`${this.$i18n.loadedLanguages[0]}`]: ', this.currentScreen[`${this.$i18n.loadedLanguages[0]}`])
+                this.$store.commit('localStorage/switchScreen', this.currentScreen[`${this.$i18n.loadedLanguages[0]}`])
+                console.log('this.$store.state.localStorage.defaultStartScreen: ', this.$store.state.localStorage.defaultStartScreen)
+
             },
             switchLang(){
-                this.$store.commit('localStorage/switchLang', this.currentLang)
+                console.log('change lang: ', this.currentLang)
+                switch (this.currentLang) {
+                    case 'English':
+                        this.$router.push("/setting")
+                        this.$store.commit('localStorage/switchLang', this.currentLang)
+                        break
+                    case 'Русский':
+                        this.$router.push("/ru/setting")
+                        this.$store.commit('localStorage/switchLang', this.currentLang)
+                        break
+                    default:
+
+                }
             }
         },
         computed:{
@@ -113,7 +134,35 @@
             console.log('this.notification: ', this.notification)
             this.currentLang =  this.$store.state.localStorage.defaultLang
             this.currentCurrency =  this.$store.state.localStorage.defaultCurrency
-            this.currentScreen =  this.$store.state.localStorage.defaultStartScreen
+            //this.currentScreen =  this.$store.state.localStorage.defaultStartScreen
+            console.log('this.$store.state.localStorage.defaultStartScreen: ', this.$store.state.localStorage.defaultStartScreen)
+            switch (this.$store.state.localStorage.defaultStartScreen) {
+                case ('Активность' || 'Active'):
+                    this.currentScreen = {
+                        en: 'Active',
+                        ru: 'Активность'
+                    }
+                    break
+                case ('Панель управления' || 'Dashboard'):
+                    this.currentScreen = {
+                        en: 'Dashboard',
+                        ru: 'Панель управления'
+                    }
+                    break
+                case ('Новости' || 'News'):
+                    this.currentScreen = {
+                        en: 'News',
+                        ru: 'Новости'
+                    }
+                    break
+                default:
+                    this.currentScreen = {
+                        en: 'Active',
+                        ru: 'Активность'
+                    }
+
+            }
+            console.log(`currentScreen ${this.$i18n.loadedLanguages[0]}`, this.currentScreen[`${this.$i18n.loadedLanguages[0]}`])
 
         }
     }

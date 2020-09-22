@@ -3,7 +3,7 @@
         <div>
             <Logo />
             <div class="tagline">
-                <p>
+                <p style="color: #293330 !important;">
                     The future of
                     blockchain
                     privacy.
@@ -23,10 +23,36 @@
         },
         mounted() {
             setTimeout(()=>{
+                var redirectPage = 'active'
+                switch(this.$store.state.localStorage.defaultStartScreen){
+                    case ('Active' || 'Активность'):
+                        redirectPage = 'active'
+                        break
+                    case ('Dashboard' || 'Панель управления'):
+                        redirectPage = 'dashboard'
+                        break
+                    case ('News' || 'Новости'):
+                        redirectPage = 'blog'
+                        break
+                }
+
+                var lang = 'en'
+                switch(this.$store.state.localStorage.defaultLang){
+                    case ('English'):
+                        lang = '/'
+                        break
+                    case ('Русский'):
+                        lang = '/ru/'
+                        break
+                    default:
+                        lang = '/'
+                }
+
                 console.log('path: ', this.$route.path)
-                if(this.$route.path == "/" || this.$route.path == "") this.$router.push("/active")
-                else if ( this.$route.path == "/en" || this.$route.path == "/en/") this.$router.push("/en/active")
-                else if ( this.$route.path == "/ru" || this.$route.path == "/ru/") this.$router.push("/ru/active")
+                this.$router.push(`${lang}${redirectPage}`)
+                //if(this.$route.path == "/" || this.$route.path == "") this.$router.push(`${lang}${redirectPage}`)
+                //else if ( this.$route.path == "/en" || this.$route.path == "/en/") this.$router.push(`${redirectPage}`)
+                //else if ( this.$route.path == "/ru" || this.$route.path == "/ru/") this.$router.push(`/ru/${redirectPage}`)
             }, 2000)
         },
         beforeCreate() {

@@ -89,9 +89,7 @@ function parseTableCrypto() {
                 }, 5000);
 
             } catch (error) {
-                console.log('Ошибка выполнения', error);
-                var data = { ERR: "Ошибка при работе браузера: " + error + "" };
-                reject(data.ERR);
+                console.log('err puppeteer: ', error);
             }
         })();
 

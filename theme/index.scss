@@ -96,12 +96,16 @@ v-data-table > .v-data-table__wrapper > table > thead > tr > th {
     max-width: 10px !important;
 }
 
-.theme--dark.v-data-table .v-data-table-header th.sortable .v-data-table-header__icon {
+.v-data-table .v-data-table-header th.sortable .v-data-table-header__icon {
     position: absolute !important;
 }
 
 .newsDescription>p{
     font-style: italic;
+}
+
+.v-application a {
+    color: #1976d2 !important;
 }
 
 .newsImg{
