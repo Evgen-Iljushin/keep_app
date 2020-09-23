@@ -23,7 +23,9 @@ export default {
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' },
-            { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+            { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+            { name: 'mobile-web-app-capable', content: 'yes' },
+            { name: 'apple-mobile-web-app-capable', content: 'yes' }
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -40,7 +42,8 @@ export default {
     ** https://nuxtjs.org/guide/plugins
     */
     plugins: [
-        { src: '~/plugins/i18n.js' }
+        { src: '~/plugins/i18n.js' },
+        '~/plugins/sw.client.js'
     ],
     /*
     ** Auto import components
@@ -64,25 +67,25 @@ export default {
         '@nuxt/http',
         'nuxt-i18n',
         'nuxt-vuex-localstorage',
-        //['nuxt-twa-module', {
-        //    /* module options */
-        //    defaultUrl: 'https://topcryptoevents.com',
-        //    hostName: 'topcryptoevents.com',
-        //    applicationId: 'com.topcryptoevents.keep_app',
-        //    launcherName: 'Keep App',
-        //    versionCode: 1,
-        //    versionName: '0.0.1',
-        //    statusBarColor: '#8cc540'/* color */,
-        //    // The sha256Fingerprints by is an array with one SHA-256 key string.
-        //    // But if you have multiple you can add them to the array. More information about the website asociation:
-        //    // https://developer.android.com/training/app-links/verify-site-associations#web-assoc
-        //    sha256Fingerprints: ['e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'],
-        //    /* optional */
-        //    /* overwrite default location for icon */
-        //    iconPath: '/static/icon.png',
-        //    /* Overwrite folder where to put .wellknown */
-        //    distFolder: '.nuxt/dist/client',
-        //}],
+        ['nuxt-twa-module', {
+            /* module options */
+            defaultUrl: 'https://topcryptoevents.com',
+            hostName: 'topcryptoevents.com',
+            applicationId: 'com.topcryptoevents.keep_app',
+            launcherName: 'Keep App',
+            versionCode: 1,
+            versionName: '0.0.1',
+            statusBarColor: '#8cc540'/* color */,
+            // The sha256Fingerprints by is an array with one SHA-256 key string.
+            // But if you have multiple you can add them to the array. More information about the website asociation:
+            // https://developer.android.com/training/app-links/verify-site-associations#web-assoc
+            sha256Fingerprints: ['e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'],
+            /* optional */
+            /* overwrite default location for icon */
+            iconPath: '/static/icon.png',
+            /* Overwrite folder where to put .wellknown */
+            distFolder: '.nuxt/dist/client',
+        }],
     ],
     oneSignal: {
         init: {
@@ -180,6 +183,7 @@ export default {
             runtimeCaching: [
                 {
                     enabled: true,
+                    offline: true,
                     urlPattern: '/*',
                     strategyOptions: {
                         cacheName: 'our-cache',

@@ -17,65 +17,50 @@
 //})
 
 
-// Должно быть true в production
-var doCache = true;
+// This is the "Offline page" service worker
 
-// Имя кэша
-var CACHE_NAME = 'keep-app-cache';
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
 
-// Очищает старый кэш
-self.addEventListener('activate', event => {
-    const cacheWhitelist = [CACHE_NAME];
-    event.waitUntil(
-        caches.keys()
-            .then(keyList =>
-                Promise.all(keyList.map(key => {
-                    if (!cacheWhitelist.includes(key)) {
-                        console.log('Deleting cache: ' + key)
-                        return caches.delete(key);
-                    }
-                }))
-            )
-    );
-});
+const CACHE = "pwabuilder-page";
 
-// 'install' вызывается, как только пользователь впервые открывает PWA
-self.addEventListener('install', function(event) {
-    if (doCache) {
-        event.waitUntil(
-            caches.open(CACHE_NAME)
-                .then(function(cache) {
-                    // Получаем данные из манифеста (они кэшируются)
-                    fetch('/manifest.json')
-                        .then(response => {
-                            response.json()
-                        })
-                        .then(assets => {
-                            // Открываем и кэшируем нужные страницы и файлы
-                            const urlsToCache = [
-                                '/active',
-                                '/blog',
-                                '/blog/*',
-                                '/info',
-                                '/setting',
-                                '/img/*.*',
-                                '/*.*',
-                            ]
-                            cache.addAll(urlsToCache)
-                            console.log('cached');
-                        })
-                })
-        );
+// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
+const offlineFallbackPage = "ToDo-replace-this-name.html";
+
+self.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "SKIP_WAITING") {
+        self.skipWaiting();
     }
 });
 
-// Когда приложение запущено, сервис-воркер перехватывает запросы и отвечает на них данными из кэша, если они есть
-self.addEventListener('fetch', function(event) {
-    if (doCache) {
-        event.respondWith(
-            caches.match(event.request).then(function(response) {
-                return response || fetch(event.request);
-            })
-        );
+self.addEventListener('install', async (event) => {
+    event.waitUntil(
+        caches.open(CACHE)
+            .then((cache) => cache.add(offlineFallbackPage))
+    );
+});
+
+if (workbox.navigationPreload.isSupported()) {
+    workbox.navigationPreload.enable();
+}
+
+self.addEventListener('fetch', (event) => {
+    if (event.request.mode === 'navigate') {
+        event.respondWith((async () => {
+            try {
+                const preloadResp = await event.preloadResponse;
+
+                if (preloadResp) {
+                    return preloadResp;
+                }
+
+                const networkResp = await fetch(event.request);
+                return networkResp;
+            } catch (error) {
+
+                const cache = await caches.open(CACHE);
+                const cachedResp = await cache.match(offlineFallbackPage);
+                return cachedResp;
+            }
+        })());
     }
 });
