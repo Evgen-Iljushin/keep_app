@@ -28,10 +28,7 @@ function parseTableCrypto() {
 
         (async () => {
             try {
-                const browser = await puppeteer.launch({
-                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                    headless: false
-                });
+                const browser = await puppeteer.launch({args: ['--no-sandbox']});
                 const page = await browser.newPage();
                 await page.setViewport({ width: 1920, height: 1080});
                 await page.goto(tableUrl, {waitUntil: 'load'});
@@ -162,10 +159,7 @@ function parseNews() {
 
         (async () => {
             try {
-                const browser = await puppeteer.launch({
-                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                    headless: false
-                });
+                const browser = await puppeteer.launch({args: ['--no-sandbox']});
                 const page = await browser.newPage();
                 await page.setViewport({ width: 1920, height: 1080});
                 await page.goto(newsUrl, {waitUntil: 'load'});
@@ -328,10 +322,7 @@ function parsePages(allNews){
 
 async function loadNewsData(url){
     try{
-        const browser = await puppeteer.launch({
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            headless: false
-        });
+        const browser = await puppeteer.launch({args: ['--no-sandbox']});
         const page = await browser.newPage();
         await page.setViewport({ width: 1920, height: 1080});
         await page.goto(url, {waitUntil: 'load'});
