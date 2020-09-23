@@ -25,23 +25,39 @@ const news = [
     }
 ]
 
+const {
+    CreateNews,
+    GetAllNews,
+    GetNews,
+    UpdateNews
+} = require('../models/News.js')
+
 /* GET user by ID. */
+router.post('/getNews/allNews', jsonParser, async function (req, res, next) {
+    try{
+        console.log('getAllNews')
+        let allNews = await GetAllNews()
+        if(allNews.type == 'success'){
+            res.json({ type: 'success', data: allNews.data })
+        } else {
+            res.json({ type: 'error', message: 'news not find' })
+        }
+    } catch (err) {
+        console.log('err getOneNews: ', err)
+        res.json({ type: 'error', message: err })
+    }
+})
+
 router.post('/getNews/getOneNews', jsonParser, async function (req, res, next) {
     try{
         console.log('getOneNews')
         var reqBody = req.body;
         console.log('reqBody: ', reqBody)
-        let checkSent = false
-        for(let x = 0; x < news.length; x++){
-            if(news[x].url == reqBody.url){
-                console.log('news: ', news[x])
-                checkSent = true
-                res.json({ type: 'success', data: news[x] })
-                break
-            }
-        }
-        if(checkSent != true) {
-            console.log('checkSent: ', checkSent)
+        let getNews = await GetNews(reqBody)
+        console.log('getNews: ', getNews)
+        if(getNews.type == 'success'){
+            res.json({ type: 'success', data: getNews.data })
+        } else {
             res.json({ type: 'error', message: 'news not find' })
         }
     } catch (err) {

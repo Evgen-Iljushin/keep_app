@@ -6,8 +6,8 @@
                     <h1>{{$t('blog.news.title')}}</h1>
                 </div>
                 <div id="newsArea">
-                    <div v-for="value in news" class="newsArea" :style="`background-image: url(${value.backgroundImage});`">
-                        <nuxt-link :to="value.url">
+                    <div v-for="value in result" class="newsArea" v-if="value.title != undefined" :style="`background-image: url(${value.backgroundImage});`">
+                        <nuxt-link :to="`/blog/${value.url}`">
                             <div class="titleNews">
                                 <h1>{{value.title}}</h1>
                             </div>
@@ -71,6 +71,22 @@
                     },
                 ]
             }
+        },
+        async asyncData ({ $http, route }) {
+            var thisNews = await $http.$post('https://topcryptoevents.com/api/getNews/allNews')
+            //var thisNews = await $http.$post('http://34.121.103.5/api/getNews/allNews')
+            //var thisNews = await $http.$post('/api/getNews/allNews')
+            let result = thisNews['data']
+            console.log('result: ', result)
+            return { result }
+
+        },
+        beforeMount() {
+            console.log("all news: ", this.result)
+            if(this.result.length < 1){
+                if(this.$route.path.indexOf("/ru/") != -1) this.$router.push("/ru/active")
+                else this.$router.push("/active")
+            }
         }
     }
 </script>
@@ -92,9 +108,10 @@
         padding: 4%;
         padding-bottom: 0%;
         line-height: 23px;
+        text-shadow: 1px 1px 2px black, 0 0 1em #959595;
     }
     .descriptionNews{
-
+        text-shadow: 1px 1px 2px black, 0 0 1em #959595;
     }
     .desription{
         width: 50%;

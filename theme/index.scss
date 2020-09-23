@@ -112,7 +112,10 @@ v-data-table > .v-data-table__wrapper > table > thead > tr > th {
     display: block;
     width: 100%;
 }
-
+img{
+    max-width: 100%;
+    height: auto;
+}
 .newsImg>img{
     display: block;
     max-width: 94vw;
