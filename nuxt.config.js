@@ -66,9 +66,9 @@ export default {
         'nuxt-vuex-localstorage',
         //['nuxt-twa-module', {
         //    /* module options */
-        //    defaultUrl: 'http://34.121.103.5/',
-        //    hostName: '34.121.103.5',
-        //        applicationId: 'com.example.keep_app',
+        //    defaultUrl: 'https://topcryptoevents.com',
+        //    hostName: 'topcryptoevents.com',
+        //    applicationId: 'com.topcryptoevents.keep_app',
         //    launcherName: 'Keep App',
         //    versionCode: 1,
         //    versionName: '0.0.1',
