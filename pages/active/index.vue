@@ -79,7 +79,7 @@
             LineChart
         },
         async asyncData ({ $http }) {
-            const allCrypto = await $http.$post('https://www.topcryptoevents.com/api/getCrypto/getAllCrypto')
+            const allCrypto = await $http.$post('https://topcryptoevents.com/api/getCrypto/getAllCrypto')
             //const allCrypto = await $http.$post('http://34.121.103.5/api/getCrypto/getAllCrypto')
             //const allCrypto = await $http.$post('/api/getCrypto/getAllCrypto')
             var table = {
