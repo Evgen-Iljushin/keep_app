@@ -44,6 +44,9 @@
                     case ('Русский'):
                         lang = '/ru/'
                         break
+                    case ('Deutsch'):
+                        lang = '/de/'
+                        break
                     default:
                         lang = '/'
                 }

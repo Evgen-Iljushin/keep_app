@@ -12,6 +12,13 @@ const {
     UpdateCrypto
 } = require('../models/Crypto.js')
 
+const {
+    GetInfo
+} = require('../models/Info.js')
+
+const {
+    GetChart
+} = require('../models/Charts.js')
 
 router.post('/getCrypto/getAllCrypto', jsonParser, async function (req, res, next) {
     try{
@@ -20,9 +27,12 @@ router.post('/getCrypto/getAllCrypto', jsonParser, async function (req, res, nex
         console.log('reqBody: ', reqBody)
 
         let allCrypto = await GetAllCrypto()
+        let priceAndPercent = await GetInfo({name: 'priceAndPercent' })
+        let chartData = await GetChart({name: 'mainChart' })
 
-        if(allCrypto.type == 'success'){
-            res.json({ type: 'success', data: allCrypto.data })
+        if(allCrypto.type == 'success' && priceAndPercent.type == 'success' && chartData.type == 'success'){
+            res.json({ type: 'success', data: { crypto: allCrypto.data, info: priceAndPercent.data[0],
+                chart: chartData.data[0]} })
         } else {
             res.json({ type: 'error', message: 'crypto not find' })
         }

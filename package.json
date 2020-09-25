@@ -2,8 +2,8 @@
   "name": "Keep_App",
   "version": "0.0.1",
   "description": "Keep App",
-  "author": "iljushinevgen <iljushinevgeniy@gmail.com>",
-  "private": true,
+  "author": "topcryptoevents.com",
+  "private": false,
   "scripts": {
     "dev": "env-cmd -f config/dev.env nuxt",
     "build": "nuxt build",

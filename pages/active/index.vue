@@ -6,33 +6,36 @@
                     <h2>{{$t('info.title')}}</h2>
                 </div>
                 <div class="price">
-                    <h1>$ {{main_info.price}}</h1>
+                    <h1>{{info.price}}</h1>
                 </div>
                 <div class="percent plus">
-                    <span>{{main_info.percent}}% <v-icon>mdi-menu-up</v-icon></span>
+                    <span>{{info.percent}} <v-icon>{{info.percent.indexOf('-') == -1 ? 'mdi-menu-up' : 'mdi-menu-down'}}</v-icon></span>
                 </div>
             </div>
             <div class="body_dashboard">
                 <v-card class="dayCheck">
-                    <button :class="activeData[0] ? 'active' : ''" @click="setActiveData(0)">
+                    <button :class="activeData[0] ? 'active' : ''" @click="changeCartData(0)">
                         24H
                     </button>
-                    <button :class="activeData[1] ? 'active' : ''" @click="setActiveData(1)">
+                    <button :class="activeData[1] ? 'active' : ''" @click="changeCartData(1)">
                         7D
                     </button>
-                    <button :class="activeData[2] ? 'active' : ''" @click="setActiveData(2)">
+                    <button :class="activeData[2] ? 'active' : ''" @click="changeCartData(2)">
                         14D
                     </button>
-                    <button :class="activeData[3] ? 'active' : ''" @click="setActiveData(3)">
+                    <button :class="activeData[3] ? 'active' : ''" @click="changeCartData(3)">
                         30D
                     </button>
-                    <button :class="activeData[4] ? 'active' : ''" @click="setActiveData(4)">
+                    <button :class="activeData[4] ? 'active' : ''" @click="changeCartData(4)">
                         90D
                     </button>
-                    <button :class="activeData[5] ? 'active' : ''" @click="setActiveData(5)">
+                    <button :class="activeData[5] ? 'active' : ''" @click="changeCartData(5)">
+                        180D
+                    </button>
+                    <button :class="activeData[6] ? 'active' : ''" @click="changeCartData(6)">
                         1Y
                     </button>
-                    <button :class="activeData[6] ? 'active' : ''" @click="setActiveData(6)">
+                    <button :class="activeData[7] ? 'active' : ''" @click="changeCartData(7)">
                         MAX
                     </button>
                 </v-card>
@@ -79,9 +82,9 @@
             LineChart
         },
         async asyncData ({ $http }) {
-            const allCrypto = await $http.$post('https://topcryptoevents.com/api/getCrypto/getAllCrypto')
-            //const allCrypto = await $http.$post('http://34.121.103.5/api/getCrypto/getAllCrypto')
-            //const allCrypto = await $http.$post('/api/getCrypto/getAllCrypto')
+            const allData = await $http.$post('https://topcryptoevents.com/api/getCrypto/getAllCrypto')
+            //const allData = await $http.$post('http://34.121.103.5/api/getCrypto/getAllCrypto')
+            //const allData = await $http.$post('http://localhost:3030/api/getCrypto/getAllCrypto')
             var table = {
                 headers: [
                     {
@@ -97,17 +100,19 @@
                 values: []
             }
 
-            console.log('get all crypto: ', allCrypto.data)
-            if(allCrypto.type == 'success'){
-                for(let x = 0; x < allCrypto.data.length; x++){
+            var allCrypto = allData.data.crypto
+            var mainData = allData.data.info.data
+
+            if(allData.type == 'success'){
+                for(let x = 0; x < allCrypto.length; x++){
                     table.values.push({
-                        exch: allCrypto.data[x].name,
-                        pair: allCrypto.data[x].pair,
-                        price: allCrypto.data[x].price,
-                        volume: allCrypto.data[x]._24hVolume,
-                        trust: allCrypto.data[x].trust,
+                        exch: allCrypto[x].name,
+                        pair: allCrypto[x].pair,
+                        price: allCrypto[x].price,
+                        volume: allCrypto[x]._24hVolume,
+                        trust: allCrypto[x].trust,
                     })
-                    console.log('get all crypto1: ', table.values)
+                    //console.log('get all crypto1: ', table.values)
                     //this.table = table
                 }
 
@@ -115,7 +120,9 @@
                 console.log('err get all crypto: ', allCrypto.data)
             }
             return {
-                table: table
+                table: table,
+                info: JSON.parse(mainData),
+                chartData: allData.data.chart
             }
 
         },
@@ -138,69 +145,38 @@
                 datacollection: null,
                 optons: null,
                 activeData: [true, false, false, false, false, false, false],
-                //table: {
-                //    headers: [
-                //        {
-                //            text: 'EXCH',
-                //            align: 'start',
-                //            value: 'exch',
-                //        },
-                //        { text: 'PAIR', value: 'pair' },
-                //        { text: 'PRICE', value: 'price' },
-                //        { text: '24H VOLUME', value: 'volume' },
-                //        { text: 'TRUST', value: 'trust' }
-                //    ],
-                //    values: [
-                //        {
-                //            exch: 'Balancer',
-                //            pair: '0X85... ETH',
-                //            price: '$ 1.12',
-                //            volume: '$597,114',
-                //            trust: 'yes'
-                //        }, {
-                //            exch: 'Uniswap (v2)',
-                //            pair: '0X85... ETH',
-                //            price: '$ 1.12',
-                //            volume: '$1,475,189',
-                //            trust: 'yes'
-                //        }, {
-                //            exch: 'MXC',
-                //            pair: 'KEEP USDT',
-                //            price: '$ 1.20',
-                //            volume: '$698,381',
-                //            trust: 'yes'
-                //        }, {
-                //            exch: 'Horbit',
-                //            pair: 'KEEP USDT',
-                //            price: '$ 1.30',
-                //            volume: '$16,920.00',
-                //            trust: 'yes'
-                //        }, {
-                //            exch: 'Horbit-test',
-                //            pair: 'KEEP USDT',
-                //            price: '$ 1.40',
-                //            volume: '$187,920',
-                //            trust: 'no'
-                //        },
-                //    ],
-                //}
+                labels: [],
+                datasetsData: []
+
 
             }
         },
         mounted () {
+            console.log('this.chartData: ', this.chartData)
+            this.labels = this.chartData.data[0].date
+            this.datasetsData = this.chartData.data[0].json
             this.fillData()
         },
         methods: {
+            changeCartData(numb){
+
+                this.activeData = [false, false, false, false, false, false, false]
+                this.activeData[numb] = true
+                console.log('changeCartData numb: ', numb)
+                this.labels = this.chartData.data[numb].date
+                this.datasetsData = this.chartData.data[numb].json
+                this.fillData()
+            },
             fillData () {
                 this.datacollection = {
 
-                    labels: ['18:00', "", '21:00', "", '9.Sep', "", '03:00', "", '06:00', "", '09:00', "", '12:00', "", '15:00', ""],
+                    labels: this.labels, //['18:00', "", '21:00', "", '9.Sep', "", '03:00', "", '06:00', "", '09:00', "", '12:00', "", '15:00', ""],
                     datasets: [
                         {
                             //backgroundColor: '#8cc540',
                             borderColor: '#8cc540',
                             borderWidth: 1,
-                            data: [0.99, 1.03, 1.00, 1.10, 1.22, 1.05, 1.22, 1.12, 1.23, 1.33, 1.30, 1.30, 1.32, 1.35, 1.22, 1.34, 1.37, 1.33]
+                            data: this.datasetsData, //[0.99, 1.03, 1.00, 1.10, 1.22, 1.05, 1.22, 1.12, 1.23, 1.33, 1.30, 1.30, 1.32, 1.35, 1.22, 1.34, 1.37, 1.33]
                         }
                     ]
                 }
@@ -209,7 +185,12 @@
                         display: false
                     },
                     tooltips: {
-                        mode: 'point'
+                        mode: 'none'
+                    },
+                    elements: {
+                        point:{
+                            radius: 0
+                        }
                     },
                     responsive: true,
                     maintainAspectRatio: false,
@@ -230,6 +211,11 @@
                         xAxes:[{
                             scaleLabel: {
                                 display: false
+                            },
+                            ticks: {
+                                beginAtZero:false,
+                                autoSkip: true,
+                                maxTicksLimit: 1000
                             },
                             gridLines: {
                                 color: "rgba(0, 0, 0, 0)",

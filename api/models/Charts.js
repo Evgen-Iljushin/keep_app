@@ -25,30 +25,12 @@ const getDate = async function () {
 }
 
 
-const News = sequelize.define('news', {
-    title: {
+const Chart = sequelize.define('chart', {
+    name: {
         type: Sequelize.TEXT
     },
-    url: {
-        type: Sequelize.TEXT
-    },
-    description: {
-        type: Sequelize.TEXT
-    },
-    author: {
-        type: Sequelize.TEXT
-    },
-    date: {
-        type: Sequelize.TEXT
-    },
-    timeRead: {
-        type: Sequelize.TEXT
-    },
-    backgroundImage: {
-        type: Sequelize.TEXT
-    },
-    html: {
-        type: Sequelize.TEXT
+    data: {
+        type: Sequelize.JSON
     }
 })
 
@@ -59,57 +41,50 @@ const News = sequelize.define('news', {
 //    .catch(err => console.log(err))
 
 
-const CreateNews = async function (data) {
+const CreateChart = async function (data) {
     try {
-        const result = await News.create({
-            title: data.title,
-            url: data.url,
-            description: data.description,
-            author: data.author,
-            date: data.data,
-            timeRead: data.timeRead,
-            backgroundImage: data.backgroundImage,
-            html: data.html
+        const result = await Chart.create({
+            name: data.name,
+            data: data.data
         })
         return { type: 'success', data: result }
     } catch (err) {
-        console.log('error CreateNews: ', err)
+        console.log('error CreateChart: ', err)
         return { type: 'error', data: err }
     }
 }
 
-async function GetAllNews () {
+async function GetAllChart () {
     try {
-        let result = await News.findAll({ raw: true })
+        let result = await Chart.findAll({ raw: true })
         if (!result){
-            console.log('error GetAllNews')
-            return { type: 'error', data: 'news not find' }
+            console.log('error get all Chart')
+            return { type: 'error', data: e }
         }
-        console.log('get GetAllNews length: ', result.length)
+        console.log('get Chart length: ', result.length)
         return { type: 'success', data: result }
     } catch (err) {
-        console.log('error GetAllNews: ', err)
+        console.log('error GetAllChart: ', err)
         return { type: 'error', data: err }
     }
 }
 
 
-async function GetNews (data) {
+async function GetChart (data) {
     try{
-        let result = await News.findAll({ where: {
-                url: data.url
+        let result = await Chart.findAll({ where: {
+                name: data.name
             },
-            order: [ [ 'createdAt', 'DESC' ]],
             raw: true
         })
 
-        console.log('GetNews on name: ', result)
+        console.log('GetChart on name: ', result)
 
         if(result && result.length > 0){
-            console.log('GetNews on name success')
+            console.log('GetChart on name success')
             return { type: 'success', data: result }
         } else {
-            return { type: 'error', message: 'GetNews not found' }
+            return { type: 'error', message: 'Chart not found' }
         }
 
     } catch (err) {
@@ -118,34 +93,35 @@ async function GetNews (data) {
 }
 
 
-async function UpdateNews (data) {
+async function UpdateChart (data) {
     try {
-        const resultUpdate = await News.update({
-            html: data.html
+        const resultUpdate = await Chart.update({
+            data: data.date
         }, {
             where: {
-                url: data.url
+                name: data.name
             },
             returning: true,
             plain: true
         })
         if (!resultUpdate) {
-            console.log('error_1 UpdateNews: ', data.name)
+            console.log('error_1 UpdateChart: ', data.name)
             return { type: 'error', data: 'error update in db'}
         } else {
-            console.log('success update news: ', data.name)
+            console.log('success update Chart: ', data.name)
             console.log('resultUpdate: ', resultUpdate)
             return { type: 'success', data: data  }
         }
     } catch (err) {
-        console.log('error UpdateNews: ', err)
+        console.log('error UpdateChart: ', err)
         return { type: 'error', data: err }
     }
 }
 
+
 exports = module.exports = {
-    CreateNews,
-    GetAllNews,
-    GetNews,
-    UpdateNews
+    CreateChart,
+    GetAllChart,
+    GetChart,
+    UpdateChart
 }

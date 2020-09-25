@@ -1,7 +1,7 @@
 export default {
     welcome: 'Welcome',
     setting: {
-        swithLang: 'Сменить язык на ',
+        swithLang: 'Sprache ändern ',
         another_lang: 'русский',
         title: 'Settings',
         title2: 'Others',

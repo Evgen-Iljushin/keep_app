@@ -53,10 +53,10 @@ const Crypto = sequelize.define('crypto', {
 })
 
 
-sequelize.sync().then((result) => {
-    console.log('result sync: ', result)
-})
-    .catch(err => console.log(err))
+//sequelize.sync().then((result) => {
+//    console.log('result sync: ', result)
+//})
+//    .catch(err => console.log(err))
 
 
 const CreateCrypto = async function (data) {

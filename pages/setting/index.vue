@@ -68,9 +68,9 @@
             return {
                 darkMode: false,
                 notification: true,
-                lang: ['English', 'Русский', 'Deutsch', 'Greek', 'Spanish', 'French',
+                lang: ['English', 'Русский', 'Deutsch',/* 'Greek', 'Spanish', 'French',
                 'Italian', 'Korean', 'Polish', 'Japanese', 'Chinese', 'Portuguese',
-                'Vietnamese', 'Dutch'],
+                'Vietnamese', 'Dutch'*/],
                 currentLang: 'English',
                 currency: ['USD', 'EUR', 'BTC', 'ETH'],
                 currentCurrency: 'USD',
@@ -115,6 +115,10 @@
                         this.$router.push("/ru/setting")
                         this.$store.commit('localStorage/switchLang', this.currentLang)
                         break
+                    case 'Deutsch':
+                        this.$router.push("/de/setting")
+                        this.$store.commit('localStorage/switchLang', this.currentLang)
+                        break
                     default:
 
                 }
@@ -140,25 +144,29 @@
                 case ('Активность' || 'Active'):
                     this.currentScreen = {
                         en: 'Active',
-                        ru: 'Активность'
+                        ru: 'Активность',
+                        de: 'Aktiv',
                     }
                     break
                 case ('Панель управления' || 'Dashboard'):
                     this.currentScreen = {
                         en: 'Dashboard',
-                        ru: 'Панель управления'
+                        ru: 'Панель управления',
+                        de: 'Instrumententafel'
                     }
                     break
                 case ('Новости' || 'News'):
                     this.currentScreen = {
                         en: 'News',
-                        ru: 'Новости'
+                        ru: 'Новости',
+                        de: 'Nachrichten'
                     }
                     break
                 default:
                     this.currentScreen = {
                         en: 'Active',
-                        ru: 'Активность'
+                        ru: 'Активность',
+                        de: 'Aktiv'
                     }
 
             }

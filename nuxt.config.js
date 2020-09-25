@@ -71,7 +71,7 @@ export default {
         //    /* module options */
         //    defaultUrl: 'https://topcryptoevents.com',
         //    hostName: 'topcryptoevents.com',
-        //    applicationId: 'com.topcryptoevents.keep_app',
+        //    applicationId: 'com.example.keep_app',
         //    launcherName: 'Keep App',
         //    versionCode: 1,
         //    versionName: '0.0.1',
@@ -86,6 +86,7 @@ export default {
         //    /* Overwrite folder where to put .wellknown */
         //    distFolder: '.nuxt/dist/client',
         //}],
+
     ],
     oneSignal: {
         init: {
@@ -96,6 +97,7 @@ export default {
             }
         }
     },
+
     /*
     ** Axios module configuration
     ** See https://axios.nuxtjs.org/options
@@ -113,6 +115,11 @@ export default {
                 code: 'ru',
                 file: 'ru-RU.js',
                 name: 'Русский'
+            },
+            {
+                code: 'de',
+                file: 'de-DE.js',
+                name: 'Deutsch'
             }
         ],
         lazy: true,
