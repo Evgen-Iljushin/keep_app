@@ -152,7 +152,7 @@ function writeDataToDb(arrData){
 
 var newsUrl = 'https://blog.keep.network/'
 
-parseNews()
+//parseNews()
 
 function parseNews() {
     try{

@@ -1,4 +1,6 @@
 const express = require('express')
+var https = require( "https" );
+var fs = require( "fs" );
 
 // Create express instance
 const app = express()
@@ -20,10 +22,17 @@ require('./middleware/parseData')
 // Export express app
 module.exports = app
 
+httpsOptions = {
+    key: fs.readFileSync("rootCA.crt"), // путь к ключу
+    cert: fs.readFileSync("rootCA.key") // путь к сертификату
+}
+
 // Start standalone server if directly running
 if (require.main === module) {
   const port = process.env.PORT || 3030
-  app.listen(port, () => {
+    https.createServer(httpsOptions, app).listen(port)
     console.log(`API server listening on port ${port}`)
-  })
+  //app.listen(port, () => {
+  //  console.log(`API server listening on port ${port}`)
+  //})
 }
