@@ -4,7 +4,7 @@ var fs = require( "fs" );
 
 // Create express instance
 const app = express()
-
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
 // Require API routes
 const users = require('./routes/users')
 const test = require('./routes/test')
