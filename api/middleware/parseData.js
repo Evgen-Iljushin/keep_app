@@ -388,7 +388,7 @@ async function loadNewsData(url){
     }
 }
 
-//getMainInfo('https://www.coingecko.com/en/coins/keep-network')
+getMainInfo('https://www.coingecko.com/en/coins/keep-network')
 
 async function getMainInfo(url){
     try{
@@ -863,7 +863,7 @@ async function autoScroll(page) {
 
 
 ontime({
-    cycle: [ '00:00', '10:00', '20:00', '30:00', '40:00', '50:00']
+    cycle: [ '00:00', '20:00', '40:00', '50:00']
 }, function (ot) {
     parseTableCrypto()
     ot.done()
@@ -871,12 +871,34 @@ ontime({
 })
 
 ontime({
-    cycle: [ '05:00', '35:00']
+    cycle: [ '35:00']
 }, function (ot) {
     parseNews()
     ot.done()
     return
 })
+
+
+ontime({
+    cycle: [ '03:00', '13:00', '23:00', '38:00', '43:00', '53:00']
+}, function (ot) {
+    getMainInfo('https://www.coingecko.com/en/coins/keep-network')
+    ot.done()
+    return
+})
+
+
+ontime({
+    cycle: [ '05:00', '30:00']
+}, function (ot) {
+    getChartData('https://www.coingecko.com/en/coins/keep-network')
+    ot.done()
+    return
+})
+
+
+
+
 
 /*
 var url = 'https://www.coingecko.com/en/coins/keep-network#markets'
