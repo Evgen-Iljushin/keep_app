@@ -53,10 +53,10 @@ const News = sequelize.define('news', {
 })
 
 
-//sequelize.sync().then((result) => {
-//    console.log('result sync: ', result)
-//})
-//    .catch(err => console.log(err))
+sequelize.sync().then((result) => {
+    console.log('result sync: ', result)
+})
+    .catch(err => console.log(err))
 
 
 const CreateNews = async function (data) {

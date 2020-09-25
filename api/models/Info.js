@@ -35,10 +35,10 @@ const Info = sequelize.define('info', {
 })
 
 
-//sequelize.sync().then((result) => {
-//    console.log('result sync: ', result)
-//})
-//    .catch(err => console.log(err))
+sequelize.sync().then((result) => {
+    console.log('result sync: ', result)
+})
+    .catch(err => console.log(err))
 
 
 const CreateInfo = async function (data) {
