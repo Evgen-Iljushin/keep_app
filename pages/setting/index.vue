@@ -45,15 +45,15 @@
             <h1>{{$t('setting.title2')}}</h1>
             <div class="settingInputs">
                 <div class="settingsRow">
-                    <span><a href="/">{{$t('setting.discordText')}}</a></span>
+                    <span><a href="https://discordapp.com/invite/wYezN7v">{{$t('setting.discordText')}}</a></span>
                     <span class="spanValue"></span>
                 </div>
                 <div class="settingsRow">
-                    <span><a href="/">{{$t('setting.mediumText')}}</a></span>
+                    <span><a href="https://blog.keep.network">{{$t('setting.mediumText')}}</a></span>
                     <span class="spanValue"></span>
                 </div>
                 <div class="settingsRow">
-                    <span><a href="/">{{$t('setting.contactText')}}</a></span>
+                    <span><a href="mailto:work@keep.network">{{$t('setting.contactText')}}</a></span>
                     <span class="spanValue"></span>
                 </div>
             </div>
