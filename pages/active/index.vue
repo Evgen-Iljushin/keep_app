@@ -8,8 +8,9 @@
                 <div class="price">
                     <h1>{{info.price}}</h1>
                 </div>
-                <div class="percent plus">
-                    <span>{{info.percent}} <v-icon>{{info.percent.indexOf('-') == -1 ? 'mdi-menu-up' : 'mdi-menu-down'}}</v-icon></span>
+                <div class="percent plus" :style="info.percent.indexOf('-') == -1 ? 'color:red:' : ''">
+                    <span>{{info.percent}} <v-icon >
+                        {{info.percent.indexOf('-') == -1 ? 'mdi-menu-up' : 'mdi-menu-down'}}</v-icon></span>
                 </div>
             </div>
             <div class="body_dashboard">

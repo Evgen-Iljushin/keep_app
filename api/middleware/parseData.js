@@ -388,7 +388,7 @@ async function loadNewsData(url){
     }
 }
 
-//getMainInfo('https://www.coingecko.com/en/coins/keep-network')
+getMainInfo('https://www.coingecko.com/en/coins/keep-network')
 
 async function getMainInfo(url){
     try{
@@ -472,7 +472,7 @@ async function writeMainData(data){
 }
 
 
-//getChartData('https://www.coingecko.com/en/coins/keep-network')
+getChartData('https://www.coingecko.com/en/coins/keep-network')
 
 async function getChartData(url){
     try{

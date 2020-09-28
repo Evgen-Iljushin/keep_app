@@ -96,7 +96,7 @@ async function GetChart (data) {
 async function UpdateChart (data) {
     try {
         const resultUpdate = await Chart.update({
-            data: data.date
+            data: data.data
         }, {
             where: {
                 name: data.name

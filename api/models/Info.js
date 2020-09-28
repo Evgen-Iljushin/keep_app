@@ -99,7 +99,7 @@ async function UpdateInfo (data) {
             data: data.data
         }, {
             where: {
-                name: data.data
+                name: data.name
             },
             returning: true,
             plain: true

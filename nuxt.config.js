@@ -71,15 +71,16 @@ export default {
         //    /* module options */
         //    defaultUrl: 'https://topcryptoevents.com',
         //    hostName: 'topcryptoevents.com',
-        //    applicationId: 'com.example.keep_app',
+        //    applicationId: 'com.topcryptoevents.keep_app',
         //    launcherName: 'Keep App',
         //    versionCode: 1,
-        //    versionName: '0.0.1',
+        //    versionName: '0.0.3',
         //    statusBarColor: '#8cc540'/* color */,
+        //    background_color: '#000000',
         //    // The sha256Fingerprints by is an array with one SHA-256 key string.
         //    // But if you have multiple you can add them to the array. More information about the website asociation:
         //    // https://developer.android.com/training/app-links/verify-site-associations#web-assoc
-        //    sha256Fingerprints: ['7D4F6EEDA43466520678A09A10B1F93C65E6BD21DCEF00E360FBDBB5CFB29BC1'],
+        //    sha256Fingerprints: ['A5:0C:62:22:BE:93:BA:57:74:A4:C7:5D:43:72:C3:61:6C:80:82:10:C0:43:72:11:32:A6:F4:0A:AF:50:DB:12'],
         //    /* optional */
         //    /* overwrite default location for icon */
         //    iconPath: '/static/icon.png',
