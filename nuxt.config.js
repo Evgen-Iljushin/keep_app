@@ -202,6 +202,15 @@ export default {
                     }
                 }
             ]
+        },
+        manifest: {
+            "scope_url": "https://topcryptoevents.com/",
+            "intent_filters": {
+                "scope_url_scheme": "https",
+                "scope_url_host": "topcryptoevents.com",
+                "scope_url_path": "/"
+            },
+            "start_url": "https://topcryptoevents.com/",
         }
     },
     build: {

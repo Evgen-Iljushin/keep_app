@@ -49,6 +49,9 @@ const News = sequelize.define('news', {
     },
     html: {
         type: Sequelize.TEXT
+    },
+    lang: {
+        type: Sequelize.TEXT
     }
 })
 
@@ -69,7 +72,8 @@ const CreateNews = async function (data) {
             date: data.data,
             timeRead: data.timeRead,
             backgroundImage: data.backgroundImage,
-            html: data.html
+            html: data.html,
+            lang: data.lang
         })
         return { type: 'success', data: result }
     } catch (err) {

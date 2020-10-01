@@ -1,13 +1,13 @@
 <template>
     <section class="container">
         <div class="content_new">
-            <v-card>
-                <div class="headNews">
+            <v-card style="min-width: 100vw; display: block;">
+                <div class="headNews"  style="min-width: 100%;">
                     <h1>{{$t('blog.news.title')}}</h1>
                 </div>
                 <div id="newsArea">
-                    <div v-for="value in result" class="newsArea" v-if="value.title != undefined" :style="`background-image: url(${value.backgroundImage});`">
-                        <nuxt-link :to="`/blog/${value.url}`">
+                    <div v-for="value in news" class="newsArea" v-if="value.title != undefined" :style="`background-image: url(${value.backgroundImage});`">
+                        <nuxt-link :to="`${$i18n.locale != 'en' ? '/'+$i18n.locale : ''}/blog/${value.url}`">
                             <div class="titleNews">
                                 <h1>{{value.title}}</h1>
                             </div>
@@ -42,47 +42,27 @@
         name: "news",
         data: () => {
             return {
-                news: [
-                    {
-                        title: "Introducing tBTC: The Safest Way to Earn with Your Bitcoin",
-                        description: "Sign up for updates on tBTC’s launch in the coming weeks," +
-                            " and opportunities to participate.",
-                        author: "Keep Network",
-                        data: "Apr 15",
-                        timeRead: "4 min read",
-                        backgroundImage: '/img/news-1.jpeg',
-                        url: '/blog/test'
-                    },
-                    {
-                        title: "How the KEEP Token Works",
-                        author: "Keep Network",
-                        data: "Apr 15",
-                        timeRead: "4 min read",
-                        backgroundImage: '/img/news-2.jpeg',
-                        url: '/blog/test'
-                    },
-                    {
-                        title: "How to Play for Keeps",
-                        author: "Keep Network",
-                        data: "Apr 15",
-                        timeRead: "4 min read",
-                        backgroundImage: '/img/news-3.jpeg',
-                        url: '/blog/test'
-                    },
-                ]
+                news: []
             }
         },
         async asyncData ({ $http, route }) {
-            var thisNews = await $http.$post('https://topcryptoevents.com/api/getNews/allNews')
+            //var thisNews = await $http.$post('https://topcryptoevents.com/api/getNews/allNews')
             //var thisNews = await $http.$post('http://34.121.103.5/api/getNews/allNews')
-            //var thisNews = await $http.$post('/api/getNews/allNews')
+            var thisNews = await $http.$post('http://localhost:3030/api/getNews/allNews')
             let result = thisNews['data']
-            console.log('result: ', result)
             return { result }
 
         },
         beforeMount() {
-            console.log("all news: ", this.result)
+            console.log('this.$i18n.locale: ', this.$i18n.locale)
+            let langNews = []
+            for(let x = 0; x < this.result.length; x++){
+                if(this.result[x].lang == this.$i18n.locale){
+                    langNews.push(this.result[x])
+                }
+            }
+            this.news = langNews
+            console.log(langNews)
             if(this.result.length < 1){
                 if(this.$route.path.indexOf("/ru/") != -1) this.$router.push("/ru/active")
                 else this.$router.push("/active")
@@ -100,7 +80,8 @@
         background-position: 50% 50% !important;
         background-size: cover;
         margin-bottom: 5%;
-        min-height: 37vh;
+        min-height: 40vh;
+        box-shadow: 0px 0px 14px 1px #80808054;
     }
     .titleNews{
         max-width: 50%;

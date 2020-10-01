@@ -166,7 +166,7 @@ function writeDataToDb(arrData){
 
 var newsUrl = 'https://blog.keep.network/'
 
-//parseNews()
+parseNews()
 
 function parseNews() {
     try{
@@ -234,7 +234,8 @@ function parseNews() {
                                     author: author,
                                     data: data,
                                     timeRead: timeRead,
-                                    html: ''
+                                    html: '',
+                                    lang: 'en'
                                 })
                             }
                             //var tabTr = $('.table.table-scrollable').children('tbody').find('tr')
@@ -388,7 +389,201 @@ async function loadNewsData(url){
     }
 }
 
-getMainInfo('https://www.coingecko.com/en/coins/keep-network')
+
+//news de and ru
+
+setTimeout(()=>{
+    loadListNews('ru', 'https://www.keepnetwork.ru/category/articles/')
+}, 60 * 1000)
+
+setTimeout(()=>{
+    loadListNews('de', 'https://www.keepnetwork.de/category/artikel/')
+}, 120 * 1000)
+
+
+async function loadListNews(lang, url){
+    try{
+        const browser = await puppeteer.launch({args: ['--no-sandbox']});
+        const page = await browser.newPage();
+        await page.setViewport({ width: 1920, height: 1080});
+        await page.goto(url, {waitUntil: 'load'});
+
+        const dimensions = await page.evaluate(() => {
+            return {
+                width: document.documentElement.clientWidth,
+                height: document.documentElement.clientHeight,
+                deviceScaleFactor: window.devicePixelRatio
+            };
+        });
+
+        console.log('Dimensions:', dimensions);
+
+        await page.addScriptTag({url: 'https://code.jquery.com/jquery-3.2.1.min.js'})
+
+        var result = await page.evaluate(async (lang) => {
+            //парсинг
+            let allNewsTitle = $('.blog-post.saxon-block.saxon-grid-post')
+            var result = []
+
+            for(let x = 0; x < allNewsTitle.length; x++){
+                let title = $(allNewsTitle[x]).find('.post-title').children('a').text()
+                let urlFull = $(allNewsTitle[x]).find('.post-title').children('a').attr('href')
+                let url = urlFull.split('/')
+                url = url[url.length - 1]
+
+                if(url == ''){
+                    url = urlFull.split('/')
+                    url = url[url.length - 2]
+                }
+
+                let imgNotParse = $(allNewsTitle[x]).find('.saxon-post-image').attr('style')
+                imgNotParse = imgNotParse.split('(')
+                imgNotParse = imgNotParse[1].split(')')
+                imgNotParse = imgNotParse[0]
+//
+                let date = $(allNewsTitle[x]).find('.post-date').text()
+
+
+                result.push({
+                    title: title,
+                    description: '',
+                    url: '' + url,
+                    urlFull: urlFull,
+                    backgroundImage: imgNotParse,
+                    author: '',
+                    data: date,
+                    timeRead: '',
+                    html: ''
+                })
+            }
+
+            let nextLink = $('.nextpostslink')
+            if(nextLink.length > 0){
+                nextLink = $(nextLink).attr('href')
+            } else {
+                nextLink = false
+            }
+
+            return {
+                news: result,
+                nextLink
+            };
+        });
+
+        for(let x = 0; x < result.news.length; x++){
+            result.news[x]['lang'] = lang
+        }
+
+        console.log('arrResult: ', result)
+
+        parsePagesLang(result.news)
+
+        if(result.nextLink != false){
+            console.log('find next link: ', result.nextLink)
+            setTimeout(()=>{
+                loadListNews(lang, result.nextLink)
+            }, 40000)
+        }
+
+    } catch (err) {
+        console.log('ERR loadListNews: ', err)
+    }
+}
+
+function parsePagesLang(allNews){
+    try{
+        let iteration = 0
+
+        parse(allNews[iteration])
+
+        async function parse (dataPage){
+            try{
+                console.log('dataPage: ', dataPage)
+                let htmlNews = await loadNewsDataLang(dataPage.urlFull)
+                if(htmlNews.type == 'success'){
+                    console.log('success parse html on ', dataPage.urlFull)
+                    dataPage.html = JSON.stringify(htmlNews.data)
+                    let checkPage = await GetNews(dataPage)
+                    if (checkPage.type != 'success') {
+                        let resultAddNews = await CreateNews(dataPage)
+                        if(resultAddNews.type == 'success'){
+                            console.log('success ADD lang News')
+                        } else {
+                            console.log('ERR add lang News')
+                        }
+                    } else {
+                        console.log('news already add')
+                    }
+
+                } else {
+                    console.log('err parse html: ', dataPage.urlFull)
+                }
+
+                if(iteration < allNews.length - 1){
+                    iteration++
+                    parse(allNews[iteration])
+                }
+            } catch (err) {
+                console.log('err parse: ', err)
+                if(iteration < allNews.length - 1){
+                    iteration++
+                    parse(allNews[iteration])
+                }
+            }
+        }
+
+    } catch (err) {
+        console.log('err parsePages: ', err)
+    }
+}
+
+async function loadNewsDataLang(url){
+    try{
+        const browser = await puppeteer.launch({args: ['--no-sandbox']});
+        const page = await browser.newPage();
+        await page.setViewport({ width: 1920, height: 1080});
+        await page.goto(url, {waitUntil: 'load'});
+
+        const dimensions = await page.evaluate(() => {
+            return {
+                width: document.documentElement.clientWidth,
+                height: document.documentElement.clientHeight,
+                deviceScaleFactor: window.devicePixelRatio
+            };
+        });
+
+        console.log('Dimensions:', dimensions);
+
+        await page.addScriptTag({url: 'https://code.jquery.com/jquery-3.2.1.min.js'})
+
+        var result = await page.evaluate(async () => {
+            //парсинг
+
+            var thisHtml = $('body').find('.entry-content').html()
+
+            return thisHtml;
+        });
+
+        //console.log('arrResult: ', result)
+        await browser.close();
+        if(result != undefined){
+            return { type: 'success', data: result }
+        } else {
+            return { type: 'err', data: result }
+        }
+
+    } catch (err) {
+        console.log('ERR loadNewsDataLang: ', err)
+        try{
+            await browser.close();
+        } catch (e) {
+
+        }
+        return { type: 'err', data: err }
+    }
+}
+
+//getMainInfo('https://www.coingecko.com/en/coins/keep-network')
 
 async function getMainInfo(url){
     try{
@@ -472,7 +667,7 @@ async function writeMainData(data){
 }
 
 
-getChartData('https://www.coingecko.com/en/coins/keep-network')
+//getChartData('https://www.coingecko.com/en/coins/keep-network')
 
 async function getChartData(url){
     try{
@@ -871,13 +1066,28 @@ ontime({
 })
 
 ontime({
-    cycle: [ '35:00']
+    cycle: ['35:00']
 }, function (ot) {
     parseNews()
     ot.done()
     return
 })
 
+ontime({
+    cycle: ['45:00']
+}, function (ot) {
+    loadListNews('ru', 'https://www.keepnetwork.ru/category/articles/')
+    ot.done()
+    return
+})
+
+ontime({
+    cycle: ['55:00']
+}, function (ot) {
+    loadListNews('de', 'https://www.keepnetwork.de/category/artikel/')
+    ot.done()
+    return
+})
 
 ontime({
     cycle: [ '03:00', '13:00', '23:00', '38:00', '43:00', '53:00']
