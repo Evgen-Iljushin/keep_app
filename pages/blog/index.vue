@@ -46,9 +46,9 @@
             }
         },
         async asyncData ({ $http, route }) {
-            //var thisNews = await $http.$post('https://topcryptoevents.com/api/getNews/allNews')
+            var thisNews = await $http.$post('https://topcryptoevents.com/api/getNews/allNews')
             //var thisNews = await $http.$post('http://34.121.103.5/api/getNews/allNews')
-            var thisNews = await $http.$post('http://localhost:3030/api/getNews/allNews')
+            //var thisNews = await $http.$post('http://localhost:3030/api/getNews/allNews')
             let result = thisNews['data']
             return { result }
 
