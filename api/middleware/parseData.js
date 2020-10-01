@@ -166,7 +166,7 @@ function writeDataToDb(arrData){
 
 var newsUrl = 'https://blog.keep.network/'
 
-parseNews()
+//parseNews()
 
 function parseNews() {
     try{
@@ -391,7 +391,7 @@ async function loadNewsData(url){
 
 
 //news de and ru
-
+/*
 setTimeout(()=>{
     loadListNews('ru', 'https://www.keepnetwork.ru/category/articles/')
 }, 60 * 1000)
@@ -399,7 +399,7 @@ setTimeout(()=>{
 setTimeout(()=>{
     loadListNews('de', 'https://www.keepnetwork.de/category/artikel/')
 }, 120 * 1000)
-
+*/
 
 async function loadListNews(lang, url){
     try{
