@@ -1066,7 +1066,7 @@ ontime({
 })
 
 ontime({
-    cycle: ['35:00']
+    cycle: ['04:30:00']
 }, function (ot) {
     parseNews()
     ot.done()
@@ -1074,7 +1074,7 @@ ontime({
 })
 
 ontime({
-    cycle: ['45:00']
+    cycle: ['05:30:00']
 }, function (ot) {
     loadListNews('ru', 'https://www.keepnetwork.ru/category/articles/')
     ot.done()
@@ -1082,7 +1082,7 @@ ontime({
 })
 
 ontime({
-    cycle: ['55:00']
+    cycle: ['06:30:00']
 }, function (ot) {
     loadListNews('de', 'https://www.keepnetwork.de/category/artikel/')
     ot.done()
